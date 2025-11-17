@@ -1,0 +1,46 @@
+.form h2 {
+color: blue;
+font-size: 24px;
+padding-left: 10px;
+padding-top: 15px;
+}
+
+.star {
+color: red;
+}
+
+.form-group form {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+}
+.form-group label {
+    padding-top: 10px;
+    font-weight: 500;
+}
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #007bff;
+}
+.form-group button {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.form-group button:hover {
+    background-color: #0056b3;
+}
