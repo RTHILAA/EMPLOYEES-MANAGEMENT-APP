@@ -43,7 +43,7 @@ export default function Form() {
                     <input type="date" id="hiredate" required />
 
                     <label for="salary">Salary</label>
-                    <input type="number" id="salary" placeholder="0.00"></input>
+                    <input type="number" id="salary" placeholder="0.00" required />
 
                     <label htmlFor="status">
                         Status <span className="star">*</span>

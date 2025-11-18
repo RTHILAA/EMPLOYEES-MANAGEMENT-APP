@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
-import Header from "./components/Header";
-import Form from "./components/Form";
+import Header from "./Components/Header/Header";
+import Form from "./Components/Form/From";
 
 export default function App() {
   return (
