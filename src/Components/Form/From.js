@@ -4,7 +4,7 @@ import "./Form.css";
 export default function Form() {
     return (
         <div className="form">
-            <h2>Add New Employee :</h2>
+            <span className="title">Add New Employee :</span>
             <div className="form-group">
                 <form>
                     <label htmlFor="fname">
@@ -42,7 +42,7 @@ export default function Form() {
                     </label>
                     <input type="date" id="hiredate" required />
 
-                    <label for="salary">Salary</label>
+                    <label for="salary">Salary <span className="star">*</span></label>
                     <input type="number" id="salary" placeholder="0.00" required />
 
                     <label htmlFor="status">
