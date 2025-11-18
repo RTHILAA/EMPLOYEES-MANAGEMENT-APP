@@ -30,12 +30,37 @@ export default function Form() {
                     <label htmlFor="department">
                         Department <span className="star">*</span>
                     </label>
-                    <input type="text" id="department" required />
+                    <select id="department" required>
+                        <option value="">Select Employee Department</option>
+                        <option value="it">Information Technology (IT)</option>
+                        <option value="hr">Human Resources (HR)</option>
+                        <option value="finance">Finance</option>
+                        <option value="sales">Sales</option>
+                    </select>
 
                     <label htmlFor="position">
                         Position <span className="star">*</span>
                     </label>
-                    <input type="text" id="position" required />
+                    <select id="position" required>
+                        <option value="">Select Employee Position</option>
+
+                        <option value="it_manager">IT Manager</option>
+                        <option value="hr_manager">HR Manager</option>
+                        <option value="finance_manager">Finance Manager</option>
+                        <option value="sales_manager">Sales Manager</option>
+
+                        <option value="software_developer">Software Developer</option>
+                        <option value="hr_officer">HR Officer</option>
+                        <option value="accountant">Accountant</option>
+                        <option value="sales_representative">Sales Representative</option>
+
+                        <option value="system_administrator">System Administrator</option>
+                        <option value="recruiter">Recruiter</option>
+                        <option value="financial_analyst">Financial Analyst</option>
+                        <option value="sales_coordinator">Sales Coordinator</option>
+                        <option value="helpdesk_technician">Helpdesk Technician</option>
+                    </select>
+
 
                     <label htmlFor="hiredate">
                         Hire Date <span className="star">*</span>
@@ -49,6 +74,7 @@ export default function Form() {
                         Status <span className="star">*</span>
                     </label>
                     <select id="status" required>
+                        <option value="">Select Employee Status</option>
                         <option value="active">Active</option>
                         <option value="onleave">On Leave</option>
                         <option value="terminated">Terminated</option>
