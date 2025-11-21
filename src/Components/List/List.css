@@ -6,6 +6,10 @@
 
 .employees-table th,
 .employees-table td {
-    border: 1px solid #ddd;
     padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.employees-table th {
+    background-color: #f2f2f2;
 }

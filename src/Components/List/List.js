@@ -17,6 +17,20 @@ export default function List() {
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
+                <tr>
+                    <td>John Doe</td>
+                    <td>gH6yS@example.com</td>
+                    <td>+1-202-555-0143</td>
+                    <td>Information Technology (IT)</td>
+                    <td>Software Developer</td>
+                    <td>2022-01-01</td>
+                    <td>$50000</td>
+                    <td>Active</td>
+                    <td>
+                        <button className="edit">Edit</button>
+                        <button className="delete">Delete</button>
+                    </td>
+                </tr>
             </table>
     </div>
   )
