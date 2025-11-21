@@ -7,15 +7,10 @@ export default function Form() {
             <span className="title">Add New Employee :</span>
             <div className="form-group">
                 <form>
-                    <label htmlFor="fname">
-                        First Name <span className="star">*</span>
+                    <label htmlFor="fullname">
+                        Full Name <span className="star">*</span>
                     </label>
-                    <input type="text" id="fname" required />
-
-                    <label htmlFor="lname">
-                        Last Name <span className="star">*</span>
-                    </label>
-                    <input type="text" id="lname" required />
+                    <input type="text" id="fullname" required />
 
                     <label htmlFor="email">
                         Email <span className="star">*</span>
