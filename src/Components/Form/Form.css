@@ -12,12 +12,14 @@ color: red;
 .form-group form {
     display: flex;
     flex-direction: column;
-    padding: 0 10px;
+    margin: 0 10px;
 }
+
 .form-group label {
     margin-top: 15px;
     font-weight: 500;
 }
+
 .form-group input,
 .form-group select {
     padding: 10px;
@@ -30,6 +32,7 @@ color: red;
 .form-group select:focus {
     border-color: #007bff;
 }
+
 .form-group button {
     margin: 10px 0;
     padding: 10px;
@@ -42,6 +45,7 @@ color: red;
     transition: background-color 0.3s ease;
     font-weight: bold;
 }
+
 .form-group button:hover {
     background-color: #0056b3;
 }
