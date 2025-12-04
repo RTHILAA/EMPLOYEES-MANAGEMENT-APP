@@ -1,74 +1,87 @@
 import React from "react";
-import "./Form.css";
+import "./Form.css"; 
+import { useState } from "react"
 
 export default function Form() {
+    const [employees, setEmployees] = useState({})
+
+    const handleChange = (e) => {
+     const id = e.target.id;
+     const value = e.target.value;
+     setEmployees({...employees, [id]:value})
+    }
+
+    const handleClick = (e) => {
+        e.preventDefault()
+    }
+
     return (
         <div className="form">
             <span className="title">Add New Employee :</span>
             <div className="form-group">
-                <form>
+                <form onSubmit={handleClick}>
                     <label htmlFor="fullname">
                         Full Name <span className="star">*</span>
                     </label>
-                    <input type="text" id="fullname" required />
+                    <input type="text" id="fullname" required onChange={handleChange}/>
 
                     <label htmlFor="email">
                         Email <span className="star">*</span>
                     </label>
-                    <input type="email" id="email" required />
+                    <input type="email" id="email" required onChange={handleChange} />
 
                     <label htmlFor="phone">
                         Phone <span className="star">*</span>
                     </label>
-                    <input type="tel" id="phone" required />
+                    <input type="tel" id="phone" required onChange={handleChange}/>
 
                     <label htmlFor="department">
                         Department <span className="star">*</span>
                     </label>
-                    <select id="department" required>
+                    <select id="department" required onChange={handleChange} >
                         <option value="">Select Employee Department</option>
-                        <option value="it">Information Technology (IT)</option>
-                        <option value="hr">Human Resources (HR)</option>
-                        <option value="finance">Finance</option>
-                        <option value="sales">Sales</option>
+                        <option value="IT">Information Technology (IT)</option>
+                        <option value="HR">Human Resources (HR)</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Sales">Sales</option>
                     </select>
 
                     <label htmlFor="position">
                         Position <span className="star">*</span>
                     </label>
-                    <select id="position" required>
+                    <select id="position" required onChange={handleChange}>
                         <option value="">Select Employee Position</option>
 
-                        <option value="it_manager">IT Manager</option>
-                        <option value="hr_manager">HR Manager</option>
-                        <option value="finance_manager">Finance Manager</option>
-                        <option value="sales_manager">Sales Manager</option>
+                        <option value="IT Manager">IT Manager</option>
+                        <option value="HR Manager">HR Manager</option>
+                        <option value="Finance Manager">Finance Manager</option>
+                        <option value="Sales Manager">Sales Manager</option>
 
-                        <option value="software_developer">Software Developer</option>
-                        <option value="hr_officer">HR Officer</option>
-                        <option value="accountant">Accountant</option>
-                        <option value="sales_representative">Sales Representative</option>
+                        <option value="Software Developer">Software Developer</option>
+                        <option value="HR Officer">HR Officer</option>
+                        <option value="Accountant">Accountant</option>
+                        <option value="Sales Representative">Sales Representative</option>
 
-                        <option value="system_administrator">System Administrator</option>
-                        <option value="recruiter">Recruiter</option>
-                        <option value="financial_analyst">Financial Analyst</option>
-                        <option value="sales_coordinator">Sales Coordinator</option>
-                        <option value="helpdesk_technician">Helpdesk Technician</option>
+                        <option value="System Administrator">System Administrator</option>
+                        <option value="Recruiter">Recruiter</option>
+                        <option value="Financial Analyst">Financial Analyst</option>
+                        <option value="Sales Coordinator">Sales Coordinator</option>
+                        <option value="Helpdesk Technician">Helpdesk Technician</option>
                     </select>
 
 
                     <label htmlFor="hiredate">
                         Hire Date <span className="star">*</span>
                     </label>
-                    <input type="date" id="hiredate" required />
+                    <input type="date" id="hiredate" required onChange={handleChange} />
 
                     <label for="salary">Salary <span className="star">*</span></label>
-                    <input type="number" id="salary" placeholder="0.00" required />
+                    <input type="number" id="salary" placeholder="0.00 MAD" required onChange={handleChange}/>
 
                     <label htmlFor="status">
                         Status <span className="star">*</span>
                     </label>
-                    <select id="status" required>
+                    <select id="status" required onChange={handleChange}>
                         <option value="">Select Employee Status</option>
                         <option value="active">Active</option>
                         <option value="onleave">On Leave</option>
