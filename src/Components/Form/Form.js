@@ -1,20 +1,20 @@
 import React from "react";
-import "./Form.css"; 
-import { useState } from "react"
+import "./Form.css";
+import { useState } from "react";
 
 export default function Form({ addEmployee }) {
-  const [employees, setEmployees] = useState({});
+    const [employees, setEmployees] = useState({});
 
     const handleChange = (e) => {
-     const id = e.target.id;
-     const value = e.target.value;
-     setEmployees({...employees, [id]:value})
-    }
+        const id = e.target.id;
+        const value = e.target.value;
+        setEmployees({ ...employees, [id]: value });
+    };
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         addEmployee(employees);
-    }
+    };
 
     return (
         <div className="form">
@@ -24,7 +24,7 @@ export default function Form({ addEmployee }) {
                     <label htmlFor="fullname">
                         Full Name <span className="star">*</span>
                     </label>
-                    <input type="text" id="fullname" required onChange={handleChange}/>
+                    <input type="text" id="fullname" required onChange={handleChange} />
 
                     <label htmlFor="email">
                         Email <span className="star">*</span>
@@ -34,12 +34,12 @@ export default function Form({ addEmployee }) {
                     <label htmlFor="phone">
                         Phone <span className="star">*</span>
                     </label>
-                    <input type="tel" id="phone" required onChange={handleChange}/>
+                    <input type="tel" id="phone" required onChange={handleChange} />
 
                     <label htmlFor="department">
                         Department <span className="star">*</span>
                     </label>
-                    <select id="department" required onChange={handleChange} >
+                    <select id="department" required onChange={handleChange}>
                         <option value="">Select Employee Department</option>
                         <option value="IT">Information Technology (IT)</option>
                         <option value="HR">Human Resources (HR)</option>
@@ -70,14 +70,21 @@ export default function Form({ addEmployee }) {
                         <option value="Helpdesk Technician">Helpdesk Technician</option>
                     </select>
 
-
                     <label htmlFor="hiredate">
                         Hire Date <span className="star">*</span>
                     </label>
                     <input type="date" id="hiredate" required onChange={handleChange} />
 
-                    <label htmlFor="salary">Salary <span className="star">*</span></label>
-                    <input type="number" id="salary" placeholder="0.00 MAD" required onChange={handleChange}/>
+                    <label htmlFor="salary">
+                        Salary <span className="star">*</span>
+                    </label>
+                    <input
+                        type="number"
+                        id="salary"
+                        placeholder="0.00 MAD"
+                        required
+                        onChange={handleChange}
+                    />
 
                     <label htmlFor="status">
                         Status <span className="star">*</span>

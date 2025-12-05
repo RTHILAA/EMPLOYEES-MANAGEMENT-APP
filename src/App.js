@@ -15,8 +15,8 @@ export default function App() {
     <div className="App">
       <div className="container">
         <Header />
-         <Form addEmployee={addEmployee} />
-      <List employees={employees} />
+        <Form addEmployee={addEmployee} />
+        <List employees={employees} />
       </div>
     </div>
   );
