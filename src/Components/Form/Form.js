@@ -2,8 +2,8 @@ import React from "react";
 import "./Form.css"; 
 import { useState } from "react"
 
-export default function Form() {
-    const [employees, setEmployees] = useState({})
+export default function Form({ addEmployee }) {
+  const [employees, setEmployees] = useState({});
 
     const handleChange = (e) => {
      const id = e.target.id;
@@ -11,15 +11,16 @@ export default function Form() {
      setEmployees({...employees, [id]:value})
     }
 
-    const handleClick = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
+        addEmployee(employees);
     }
 
     return (
         <div className="form">
             <span className="title">Add New Employee :</span>
             <div className="form-group">
-                <form onSubmit={handleClick}>
+                <form onSubmit={handleSubmit}>
                     <label htmlFor="fullname">
                         Full Name <span className="star">*</span>
                     </label>
@@ -75,7 +76,7 @@ export default function Form() {
                     </label>
                     <input type="date" id="hiredate" required onChange={handleChange} />
 
-                    <label for="salary">Salary <span className="star">*</span></label>
+                    <label htmlFor="salary">Salary <span className="star">*</span></label>
                     <input type="number" id="salary" placeholder="0.00 MAD" required onChange={handleChange}/>
 
                     <label htmlFor="status">
