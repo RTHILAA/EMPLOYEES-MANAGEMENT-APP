@@ -10,7 +10,7 @@ export default function List({ employees }) {
             <table className="employees-table">
                 <tr>
                     <th>Full Name</th>
-                    <th>Email</th>
+                    <th>Email</th> 
                     <th>Phone</th>
                     <th>Department</th>
                     <th>Position</th>

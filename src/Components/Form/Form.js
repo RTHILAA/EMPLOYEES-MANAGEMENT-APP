@@ -2,18 +2,18 @@ import React from "react";
 import "./Form.css";
 import { useState } from "react";
 
-export default function Form({ addEmployee }) {
-    const [employees, setEmployees] = useState({});
+export default function Form({addEmployee}) {
+    const [currentEmployees, setCurrentEmployees] = useState({})
 
     const handleChange = (e) => {
         const id = e.target.id;
         const value = e.target.value;
-        setEmployees({ ...employees, [id]: value });
+        setCurrentEmployees({ ...currentEmployees, [id]: value });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addEmployee(employees);
+        addEmployee(currentEmployees);
     };
 
     return (
