@@ -1,28 +1,23 @@
 import React, { useState } from "react";
 import "./App.css";
 import Header from "./Header/Header";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function App() {
-
-  // LIST OF EMPLOYEES
   const [employees, setEmployees] = useState([]);
-
-  // EMPLOYEE BEING TYPED IN FORM
   const [currentEmployee, setCurrentEmployee] = useState({});
 
-  // UPDATE CURRENT EMPLOYEE WHILE TYPING
   const handleChange = (e) => {
     const id = e.target.id;
     const value = e.target.value;
     setCurrentEmployee({ ...currentEmployee, [id]: value });
   };
 
-  // ADD EMPLOYEE TO LIST
   const handleSubmit = (e) => {
     e.preventDefault();
-    setEmployees([...employees, currentEmployee]);
+    setEmployees([...employees, currentEmployee]); // ✔ تزيد الموظف للائحة
+    setCurrentEmployee({}); // ✔ ترجع الفورم فارغة
   };
 
   return (
@@ -30,24 +25,53 @@ export default function App() {
       <div className="container">
         <Header />
 
-        {/* ---------- FORM ---------- */}
+        {/* FORM */}
         <div className="form">
           <span className="title">Add New Employee :</span>
-
           <div className="form-group">
             <form onSubmit={handleSubmit}>
+              <label htmlFor="fullname">
+                Full Name <span className="star">*</span>
+              </label>
+              <input
+                type="text"
+                id="fullname"
+                value={currentEmployee.fullname || ""}
+                onChange={handleChange}
+                required
+              />
 
-              <label htmlFor="fullname">Full Name <span className="star">*</span></label>
-              <input type="text" id="fullname" required onChange={handleChange} />
+              <label htmlFor="email">
+                Email <span className="star">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={currentEmployee.email || ""}
+                onChange={handleChange}
+                required
+              />
 
-              <label htmlFor="email">Email <span className="star">*</span></label>
-              <input type="email" id="email" required onChange={handleChange} />
+              <label htmlFor="phone">
+                Phone <span className="star">*</span>
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                value={currentEmployee.phone || ""}
+                onChange={handleChange}
+                required
+              />
 
-              <label htmlFor="phone">Phone <span className="star">*</span></label>
-              <input type="tel" id="phone" required onChange={handleChange} />
-
-              <label htmlFor="department">Department <span className="star">*</span></label>
-              <select id="department" required onChange={handleChange}>
+              <label htmlFor="department">
+                Department <span className="star">*</span>
+              </label>
+              <select
+                id="department"
+                value={currentEmployee.department || ""}
+                onChange={handleChange}
+                required
+              >
                 <option value="">Select Employee Department</option>
                 <option value="IT">Information Technology (IT)</option>
                 <option value="HR">Human Resources (HR)</option>
@@ -55,8 +79,15 @@ export default function App() {
                 <option value="Sales">Sales</option>
               </select>
 
-              <label htmlFor="position">Position <span className="star">*</span></label>
-              <select id="position" required onChange={handleChange}>
+              <label htmlFor="position">
+                Position <span className="star">*</span>
+              </label>
+              <select
+                id="position"
+                value={currentEmployee.position || ""}
+                onChange={handleChange}
+                required
+              >
                 <option value="">Select Employee Position</option>
                 <option value="IT Manager">IT Manager</option>
                 <option value="HR Manager">HR Manager</option>
@@ -65,22 +96,50 @@ export default function App() {
                 <option value="Software Developer">Software Developer</option>
                 <option value="HR Officer">HR Officer</option>
                 <option value="Accountant">Accountant</option>
-                <option value="Sales Representative">Sales Representative</option>
-                <option value="System Administrator">System Administrator</option>
+                <option value="Sales Representative">
+                  Sales Representative
+                </option>
+                <option value="System Administrator">
+                  System Administrator
+                </option>
                 <option value="Recruiter">Recruiter</option>
                 <option value="Financial Analyst">Financial Analyst</option>
                 <option value="Sales Coordinator">Sales Coordinator</option>
                 <option value="Helpdesk Technician">Helpdesk Technician</option>
               </select>
 
-              <label htmlFor="hiredate">Hire Date <span className="star">*</span></label>
-              <input type="date" id="hiredate" required onChange={handleChange} />
+              <label htmlFor="hiredate">
+                Hire Date <span className="star">*</span>
+              </label>
+              <input
+                type="date"
+                id="hiredate"
+                value={currentEmployee.hiredate || ""}
+                onChange={handleChange}
+                required
+              />
 
-              <label htmlFor="salary">Salary <span className="star">*</span></label>
-              <input type="number" id="salary" placeholder="0.00 MAD" required onChange={handleChange} />
+              <label htmlFor="salary">
+                Salary <span className="star">*</span>
+              </label>
+              <input
+                type="number"
+                id="salary"
+                value={currentEmployee.salary || ""}
+                placeholder="0.00 MAD"
+                onChange={handleChange}
+                required
+              />
 
-              <label htmlFor="status">Status <span className="star">*</span></label>
-              <select id="status" required onChange={handleChange}>
+              <label htmlFor="status">
+                Status <span className="star">*</span>
+              </label>
+              <select
+                id="status"
+                value={currentEmployee.status || ""}
+                onChange={handleChange}
+                required
+              >
                 <option value="">Select Employee Status</option>
                 <option value="active">Active</option>
                 <option value="onleave">On Leave</option>
@@ -92,41 +151,42 @@ export default function App() {
           </div>
         </div>
 
-        {/* ---------- LIST ---------- */}
+        {/* LIST */}
         <div className="list">
           <span className="title">Employees List :</span>
-
           <table className="employees-table">
-            <tr>
-              <th>Full Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Department</th>
-              <th>Position</th>
-              <th>Hire Date</th>
-              <th>Salary</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-
-            {employees.map((emp) => {
-              return (
+            <thead>
               <tr>
-                <td>{emp.fullname}</td>
-                <td>{emp.email}</td>
-                <td>{emp.phone}</td>
-                <td>{emp.department}</td>
-                <td>{emp.position}</td>
-                <td>{emp.hiredate}</td>
-                <td>{emp.salary}</td>
-                <td>{emp.status}</td>
-                <td className="actions">
-                  <FontAwesomeIcon icon={faPenToSquare} className="edit-icon" />
-                  <FontAwesomeIcon icon={faTrash} className="delete-icon" />
-                </td>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Department</th>
+                <th>Position</th>
+                <th>Hire Date</th>
+                <th>Salary</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
-              )
-            })}
+            </thead>
+
+            <tbody>
+              {employees.map((emp, id) => (
+                <tr key={id}>
+                  <td>{emp.fullname}</td>
+                  <td>{emp.email}</td>
+                  <td>{emp.phone}</td>
+                  <td>{emp.department}</td>
+                  <td>{emp.position}</td>
+                  <td>{emp.hiredate}</td>
+                  <td>{emp.salary}</td>
+                  <td>{emp.status}</td>
+                  <td className="actions">
+                    <FontAwesomeIcon icon={faPenToSquare} className="edit-icon" />
+                    <FontAwesomeIcon icon={faTrash} className="delete-icon" />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       </div>
