@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import "./App.css";
-import "./Styles/Form.css"
-import "./Styles/List.css"
 import Header from "./Header/Header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
