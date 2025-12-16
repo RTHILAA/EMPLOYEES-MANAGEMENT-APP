@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import Header from "./Header/Header";
+import Header from "./Components/Header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
