@@ -130,7 +130,6 @@ export default function App() {
                 onChange={handleChange}
                 required
               />
-
               <label htmlFor="status">
                 Status <span className="star">*</span>
               </label>
@@ -145,7 +144,6 @@ export default function App() {
                 <option value="onleave">On Leave</option>
                 <option value="terminated">Terminated</option>
               </select>
-
               <button type="submit">Add Employee</button>
             </form>
           </div>
@@ -181,7 +179,10 @@ export default function App() {
                   <td>{emp.salary}</td>
                   <td>{emp.status}</td>
                   <td className="actions">
-                    <FontAwesomeIcon icon={faPenToSquare} className="edit-icon" />
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      className="edit-icon"
+                    />
                     <FontAwesomeIcon icon={faTrash} className="delete-icon" />
                   </td>
                 </tr>
