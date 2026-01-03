@@ -5,19 +5,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function App() {
+  const [employee, setEmployee] = useState({});
   const [employees, setEmployees] = useState([]);
-  const [currentEmployee, setCurrentEmployee] = useState({});
 
   const handleChange = (e) => {
     const id = e.target.id;
     const value = e.target.value;
-    setCurrentEmployee({ ...currentEmployee, [id]: value });
+    setEmployee({ ...employee, [id]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setEmployees([...employees, currentEmployee]); // ✔ تزيد الموظف للائحة
-    setCurrentEmployee({}); // ✔ ترجع الفورم فارغة
+    setEmployees([...employees, employee]); // ✔ تزيد الموظف للائحة
+    setEmployee({}); // ✔ ترجع الفورم فارغة
   };
 
   return (
@@ -36,7 +36,7 @@ export default function App() {
               <input
                 type="text"
                 id="fullname"
-                value={currentEmployee.fullname || ""}
+                value={employee.fullname || ""}
                 onChange={handleChange}
                 required
               />
@@ -47,7 +47,7 @@ export default function App() {
               <input
                 type="email"
                 id="email"
-                value={currentEmployee.email || ""}
+                value={employee.email || ""}
                 onChange={handleChange}
                 required
               />
@@ -58,7 +58,7 @@ export default function App() {
               <input
                 type="tel"
                 id="phone"
-                value={currentEmployee.phone || ""}
+                value={employee.phone || ""}
                 onChange={handleChange}
                 required
               />
@@ -68,7 +68,7 @@ export default function App() {
               </label>
               <select
                 id="department"
-                value={currentEmployee.department || ""}
+                value={employee.department || ""}
                 onChange={handleChange}
                 required
               >
@@ -84,7 +84,7 @@ export default function App() {
               </label>
               <select
                 id="position"
-                value={currentEmployee.position || ""}
+                value={employee.position || ""}
                 onChange={handleChange}
                 required
               >
@@ -114,7 +114,7 @@ export default function App() {
               <input
                 type="date"
                 id="hiredate"
-                value={currentEmployee.hiredate || ""}
+                value={employee.hiredate || ""}
                 onChange={handleChange}
                 required
               />
@@ -125,7 +125,7 @@ export default function App() {
               <input
                 type="number"
                 id="salary"
-                value={currentEmployee.salary || ""}
+                value={employee.salary || ""}
                 placeholder="0.00 MAD"
                 onChange={handleChange}
                 required
@@ -135,7 +135,7 @@ export default function App() {
               </label>
               <select
                 id="status"
-                value={currentEmployee.status || ""}
+                value={employee.status || ""}
                 onChange={handleChange}
                 required
               >
