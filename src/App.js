@@ -16,8 +16,8 @@ export default function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setEmployees([...employees, employee]); // ✔ تزيد الموظف للائحة
-    setEmployee({}); // ✔ ترجع الفورم فارغة
+    setEmployees([...employees, employee]);
+    setEmployee({});
   };
 
   return (
@@ -25,7 +25,6 @@ export default function App() {
       <div className="container">
         <Header />
 
-        {/* FORM */}
         <div className="form">
           <span className="title">Add New Employee :</span>
           <div className="form-group">
@@ -140,9 +139,9 @@ export default function App() {
                 required
               >
                 <option value="">Select Employee Status</option>
-                <option value="active">Active</option>
-                <option value="onleave">On Leave</option>
-                <option value="terminated">Terminated</option>
+                <option value="Active">Active</option>
+                <option value="On leave">On Leave</option>
+                <option value="Terminated">Terminated</option>
               </select>
               <button type="submit">Add Employee</button>
             </form>
