@@ -178,10 +178,7 @@ export default function App() {
                   <td>{emp.salary}</td>
                   <td>{emp.status}</td>
                   <td className="actions">
-                    <FontAwesomeIcon
-                      icon={faPenToSquare}
-                      className="edit-icon"
-                    />
+                    <FontAwesomeIcon icon={faPenToSquare} className="edit-icon" />
                     <FontAwesomeIcon icon={faTrash} className="delete-icon" />
                   </td>
                 </tr>
