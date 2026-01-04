@@ -11,13 +11,24 @@ export default function App() {
   const handleChange = (e) => {
     const id = e.target.id;
     const value = e.target.value;
-    setEmployee({ ...employee, [id]: value });
+    setEmployee({ ...employee, [id]: value});
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setEmployees([...employees, employee]);
+    const newEmployee = { ...employee, id: Date.now() };
+    setEmployees([...employees, newEmployee]);
     setEmployee({});
+  };
+
+  const handleDelete = (id) => {
+  const employeeToDelete = employees.filter(emp => emp.id !== id);
+  setEmployees(employeeToDelete);
+};
+
+  const handleEdit = (id) => {
+    const employeeToEdit = employees.find(emp => emp.id === id);
+    setEmployee(employeeToEdit);
   };
 
   return (
@@ -148,7 +159,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* LIST */}
+
         <div className="list">
           <span className="title">Employees List :</span>
           <table className="employees-table">
@@ -167,22 +178,24 @@ export default function App() {
             </thead>
 
             <tbody>
-              {employees.map((emp, id) => (
-                <tr key={id}>
-                  <td>{emp.fullname}</td>
-                  <td>{emp.email}</td>
-                  <td>{emp.phone}</td>
-                  <td>{emp.department}</td>
-                  <td>{emp.position}</td>
-                  <td>{emp.hiredate}</td>
-                  <td>{emp.salary}</td>
-                  <td>{emp.status}</td>
-                  <td className="actions">
-                    <FontAwesomeIcon icon={faPenToSquare} className="edit-icon" />
-                    <FontAwesomeIcon icon={faTrash} className="delete-icon" />
-                  </td>
-                </tr>
-              ))}
+              {employees.map((emp) => {
+                return (
+                  <tr key={emp.id}>
+                    <td>{emp.fullname}</td>
+                    <td>{emp.email}</td>
+                    <td>{emp.phone}</td>
+                    <td>{emp.department}</td>
+                    <td>{emp.position}</td>
+                    <td>{emp.hiredate}</td>
+                    <td>{emp.salary}</td>
+                    <td>{emp.status}</td>
+                    <td className="actions">
+                      <FontAwesomeIcon icon={faPenToSquare} onClick={handleEdit} className="edit-icon" />
+                      <FontAwesomeIcon icon={faTrash} onClick={handleDelete} className="delete-icon" />
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>
