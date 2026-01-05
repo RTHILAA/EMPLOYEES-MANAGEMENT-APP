@@ -11,7 +11,7 @@ export default function App() {
   const handleChange = (e) => {
     const id = e.target.id;
     const value = e.target.value;
-    setEmployee({ ...employee, [id]: value});
+    setEmployee({ ...employee, [id]: value });
   };
 
   const handleSubmit = (e) => {
@@ -22,9 +22,9 @@ export default function App() {
   };
 
   const handleDelete = (id) => {
-  const employeeToDelete = employees.filter(emp => emp.id !== id);
-  setEmployees(employeeToDelete);
-};
+    const newEmployees = employees.filter(emp => emp.id !== id);
+    setEmployees(newEmployees);
+  };
 
   const handleEdit = (id) => {
     const employeeToEdit = employees.find(emp => emp.id === id);
@@ -35,7 +35,6 @@ export default function App() {
     <div className="App">
       <div className="container">
         <Header />
-
         <div className="form">
           <span className="title">Add New Employee :</span>
           <div className="form-group">
@@ -190,8 +189,8 @@ export default function App() {
                     <td>{emp.salary}</td>
                     <td>{emp.status}</td>
                     <td className="actions">
-                      <FontAwesomeIcon icon={faPenToSquare} onClick={handleEdit} className="edit-icon" />
-                      <FontAwesomeIcon icon={faTrash} onClick={handleDelete} className="delete-icon" />
+                      <FontAwesomeIcon icon={faPenToSquare} onClick={() => handleEdit(emp.id)} className="edit-icon" />
+                      <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(emp.id)} className="delete-icon" />
                     </td>
                   </tr>
                 )
