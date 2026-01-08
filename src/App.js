@@ -178,6 +178,13 @@ export default function App() {
 
             <tbody>
               {employees.map((emp) => {
+                const handleEditClick = () => {
+                  handleEdit(emp.id);
+                }
+
+                const handleDeleteClick = () => {
+                  handleDelete(emp.id);
+                }
                 return (
                   <tr key={emp.id}>
                     <td>{emp.fullname}</td>
@@ -189,8 +196,8 @@ export default function App() {
                     <td>{emp.salary}</td>
                     <td>{emp.status}</td>
                     <td className="actions">
-                      <FontAwesomeIcon icon={faPenToSquare} onClick={() => handleEdit(emp.id)} className="edit-icon" />
-                      <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(emp.id)} className="delete-icon" />
+                      <FontAwesomeIcon icon={faPenToSquare} onClick={handleEditClick} className="edit-icon" />
+                      <FontAwesomeIcon icon={faTrash} onClick={handleDeleteClick} className="delete-icon" />
                     </td>
                   </tr>
                 )
