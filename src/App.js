@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./App.css";
 import Header from "./Components/Header/Header";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { UserRoundPen, UserRoundMinus, UserRoundPlus } from "lucide-react";
+
 
 export default function App() {
   const [employees, setEmployees] = useState([]);
@@ -153,7 +153,11 @@ export default function App() {
                 <option value="On leave">On Leave</option>
                 <option value="Terminated">Terminated</option>
               </select>
-              <button type="submit">Add Employee</button>
+
+                <button type="submit" className="add-btn">
+                  <UserRoundPlus className="add-icon" />
+                  <span>Add Employee</span>
+                </button>
             </form>
           </div>
         </div>
@@ -189,8 +193,8 @@ export default function App() {
                     <td>{emp.salary}</td>
                     <td>{emp.status}</td>
                     <td className="actions">
-                      <FontAwesomeIcon icon={faPenToSquare} onClick={() => handleEdit(emp.id)} className="edit-icon" />
-                      <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(emp.id)} className="delete-icon" />
+                      <UserRoundPen onClick={() => handleEdit(emp.id)} className="edit-icon" />
+                      <UserRoundMinus onClick={() => handleDelete(emp.id)} className="delete-icon" />
                     </td>
                   </tr>
                 )
