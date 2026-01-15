@@ -16,14 +16,14 @@ export default function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newEmployee = { ...employee, id: Date.now() };
-    setEmployees([...employees, newEmployee]);
+    const NewEmp = { ...employee, id: Date.now() };
+    setEmployees([...employees, NewEmp]);
     setEmployee({});
   };
 
   const handleDelete = (id) => {
-    const newEmployees = employees.filter(emp => emp.id !== id);
-    setEmployees(newEmployees);
+    const UpdateEmp = employees.filter(emp => emp.id !== id);
+    setEmployees(UpdateEmp);
   };
 
   const handleEdit = (id) => {
