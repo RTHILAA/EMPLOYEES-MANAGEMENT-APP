@@ -1,10 +1,10 @@
 import React from 'react'
 import './Header.css'
 
-export default function header() {
+export default function Header() {
   return (
     <div className="Header">
-        <span>Employee Management</span>
+        <span>Employee Management System</span>
     </div>
   )
 }
