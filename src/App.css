@@ -72,7 +72,7 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -102,6 +102,136 @@ body {
   animation: pulse 2s infinite;
 }
 
+/* Stats Section Styles */
+.stats-section {
+  margin-bottom: 30px;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 10px;
+}
+
+/* Stats Card Styles */
+.stats-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-default);
+  position: relative;
+  overflow: hidden;
+  animation: slideIn 0.4s ease-out;
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stats-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.stats-card.primary::before {
+  background: linear-gradient(90deg, var(--primary-color), #3b82f6);
+}
+
+.stats-card.success::before {
+  background: linear-gradient(90deg, var(--success-color), #34d399);
+}
+
+.stats-card.warning::before {
+  background: linear-gradient(90deg, var(--warning-color), #fbbf24);
+}
+
+.stats-card.danger::before {
+  background: linear-gradient(90deg, var(--danger-color), #f87171);
+}
+
+.stats-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.stats-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stats-card.primary .stats-card-icon {
+  background-color: rgba(37, 99, 235, 0.1);
+  color: var(--primary-color);
+}
+
+.stats-card.success .stats-card-icon {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
+}
+
+.stats-card.warning .stats-card-icon {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--warning-color);
+}
+
+.stats-card.danger .stats-card-icon {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--danger-color);
+}
+
+.stats-card-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stats-card.primary .stats-card-value {
+  color: var(--primary-color);
+}
+
+.stats-card.success .stats-card-value {
+  color: var(--success-color);
+}
+
+.stats-card.warning .stats-card-value {
+  color: var(--warning-color);
+}
+
+.stats-card.danger .stats-card-value {
+  color: var(--danger-color);
+}
+
+.stats-card-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--secondary-color);
+  margin-bottom: 8px;
+}
+
+.stats-card-trend {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Form Styles */
 .form-group form {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -224,6 +354,7 @@ body {
 }
 
 .employees-table-container {
+  width: 100%;
   margin: 30px 0;
   overflow-x: auto;
   border-radius: 12px;
@@ -391,6 +522,13 @@ body {
   animation: fadeIn 0.8s ease-out;
 }
 
+/* Animation delays for staggering effects */
+.stats-card:nth-child(1) { animation-delay: 0.1s; }
+.stats-card:nth-child(2) { animation-delay: 0.2s; }
+.stats-card:nth-child(3) { animation-delay: 0.3s; }
+.stats-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Existing Media Queries */
 @media (max-width: 768px) {
   .container {
     padding: 0 15px;
@@ -416,6 +554,25 @@ body {
   .cancel-btn {
     width: 100%;
   }
+  
+  /* Stats Grid adjustments */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  
+  .stats-card {
+    padding: 20px;
+  }
+  
+  .stats-card-value {
+    font-size: 2rem;
+  }
+  
+  .stats-card-icon {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -430,5 +587,14 @@ body {
   .status-badge {
     font-size: 0.8rem;
     padding: 4px 8px;
+  }
+  
+  /* Stats Grid adjustments */
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-card-value {
+    font-size: 1.8rem;
   }
 }

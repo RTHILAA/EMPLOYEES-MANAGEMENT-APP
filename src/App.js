@@ -1,7 +1,27 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./Components/Header/Header";
-import { UserRoundPen, UserRoundMinus, UserRoundPlus, SaveIcon, XCircle, Users, Calendar, DollarSign, Briefcase, Mail, Phone, Building, UserCheck } from "lucide-react";
+import { UserRoundPen, UserRoundMinus, UserRoundPlus, SaveIcon, XCircle, Users, Calendar, DollarSign, Briefcase, Mail, Phone, Building, UserCheck, UsersRound, UserCog, UserX, CalendarDays } from "lucide-react";
+
+// StatsCard Component - intégré dans App.js
+const StatsCard = ({ title, value, icon, color = 'primary', trend }) => {
+  return (
+    <div className={`stats-card ${color}`}>
+      <div className="stats-card-header">
+        <div>
+          <h3 className="stats-card-title">{title}</h3>
+          <div className="stats-card-value">{value}</div>
+        </div>
+        <div className="stats-card-icon">
+          {icon}
+        </div>
+      </div>
+      <div className="stats-card-trend">
+        {trend}
+      </div>
+    </div>
+  );
+};
 
 export default function App() {
   const [employees, setEmployees] = useState([]);
@@ -18,6 +38,12 @@ export default function App() {
   const [isEditing, setIsEditing] = useState(false);
   const [newEmployeeId, setNewEmployeeId] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
+  
+  // Calculate stats
+  const totalEmployees = employees.length;
+  const activeEmployees = employees.filter(emp => emp.status === 'Active').length;
+  const onLeaveEmployees = employees.filter(emp => emp.status === 'On leave').length;
+  const terminatedEmployees = employees.filter(emp => emp.status === 'Terminated').length;
 
   // Load employees from localStorage on initial render
   useEffect(() => {
@@ -149,6 +175,48 @@ export default function App() {
     <div className="App">
       <div className="container">
         <Header />
+
+        {/* Stats Cards Section */}
+        <div className="stats-section">
+          <div className="title">
+            <CalendarDays size={24} />
+            <span>Dashboard Overview</span>
+          </div>
+          
+          <div className="stats-grid">
+            <StatsCard
+              title="Total Employees"
+              value={totalEmployees}
+              icon={<UsersRound size={24} />}
+              color="primary"
+              trend={`${totalEmployees > 0 ? '+0' : '0'} from last month`}
+            />
+            
+            <StatsCard
+              title="Active"
+              value={activeEmployees}
+              icon={<UserCog size={24} />}
+              color="success"
+              trend={`${activeEmployees} currently working`}
+            />
+            
+            <StatsCard
+              title="On Leave"
+              value={onLeaveEmployees}
+              icon={<UserRoundPlus size={24} />}
+              color="warning"
+              trend={`${onLeaveEmployees} away currently`}
+            />
+            
+            <StatsCard
+              title="Terminated"
+              value={terminatedEmployees}
+              icon={<UserX size={24} />}
+              color="danger"
+              trend={`${terminatedEmployees} this year`}
+            />
+          </div>
+        </div>
 
         <div className="form-section">
           <div className="title">
