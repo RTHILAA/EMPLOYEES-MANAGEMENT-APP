@@ -22,8 +22,8 @@ export default function App() {
   };
 
   const handleDelete = (id) => {
-    const UpdateEmp = employees.filter(emp => emp.id !== id);
-    setEmployees(UpdateEmp);
+    const UpdatedEmp = employees.filter(emp => emp.id !== id);
+    setEmployees(UpdatedEmp);
   };
 
   const handleEdit = (id) => {
