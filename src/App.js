@@ -1,21 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./Components/Header/Header";
-import { 
-  UserRoundPen, 
-  UserRoundMinus, 
-  UserRoundPlus, 
-  SaveIcon,
-  XCircle,
-  Users,
-  Calendar,
-  DollarSign,
-  Briefcase,
-  Mail,
-  Phone,
-  Building,
-  UserCheck
-} from "lucide-react";
+import { UserRoundPen, UserRoundMinus, UserRoundPlus, SaveIcon, XCircle, Users, Calendar, DollarSign, Briefcase, Mail, Phone, Building, UserCheck } from "lucide-react";
 
 export default function App() {
   const [employees, setEmployees] = useState([]);
@@ -54,29 +40,29 @@ export default function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (isEditing) {
       // Update existing employee
-      const updatedEmployees = employees.map(emp => 
+      const updatedEmployees = employees.map(emp =>
         emp.id === employee.id ? { ...employee } : emp
       );
       setEmployees(updatedEmployees);
       setIsEditing(false);
     } else {
       // Add new employee
-      const NewEmp = { 
-        ...employee, 
+      const NewEmp = {
+        ...employee,
         id: Date.now(),
         hiredate: formatDate(employee.hiredate),
         salary: formatSalary(employee.salary)
       };
       setEmployees([NewEmp, ...employees]);
       setNewEmployeeId(NewEmp.id);
-      
+
       // Clear highlight after animation
       setTimeout(() => setNewEmployeeId(null), 1000);
     }
-    
+
     // Reset form
     setEmployee({
       fullname: "",
@@ -92,7 +78,7 @@ export default function App() {
 
   const handleDelete = (id) => {
     setDeletingId(id);
-    
+
     // Add animation delay before actual deletion
     setTimeout(() => {
       const UpdatedEmp = employees.filter(emp => emp.id !== id);
@@ -163,13 +149,13 @@ export default function App() {
     <div className="App">
       <div className="container">
         <Header />
-        
+
         <div className="form-section">
           <div className="title">
             {isEditing ? <UserRoundPen size={24} /> : <UserRoundPlus size={24} />}
-            <span>{isEditing ? 'Edit Employee' : 'Add New Employee'}</span>
+            <span>{isEditing ? 'Edit Employee' : 'Register Employee'}</span>
           </div>
-          
+
           <div className="form-group">
             <form onSubmit={handleSubmit}>
               <div>
@@ -316,8 +302,8 @@ export default function App() {
                       <SaveIcon className="add-icon" />
                       <span>Update Employee</span>
                     </button>
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       className="cancel-btn"
                       onClick={handleCancelEdit}
                     >
@@ -341,7 +327,7 @@ export default function App() {
             <Users size={24} />
             <span>Employees List ({employees.length})</span>
           </div>
-          
+
           {employees.length === 0 ? (
             <div className="empty-state">
               <Users size={80} />
@@ -413,14 +399,14 @@ export default function App() {
                           </span>
                         </td>
                         <td className="actions">
-                          <UserRoundPen 
-                            onClick={() => handleEdit(emp.id)} 
-                            className="edit-icon" 
+                          <UserRoundPen
+                            onClick={() => handleEdit(emp.id)}
+                            className="edit-icon"
                             title="Edit"
                           />
-                          <UserRoundMinus 
-                            onClick={() => handleDelete(emp.id)} 
-                            className="delete-icon" 
+                          <UserRoundMinus
+                            onClick={() => handleDelete(emp.id)}
+                            className="delete-icon"
                             title="Delete"
                           />
                         </td>
