@@ -1,11 +1,16 @@
 .Header {
     background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-    padding: 20px;
-    box-shadow: var(--shadow-lg);
+    padding: 20px 0;
+    /*Paddinghorizontalà0*/box-shadow: var(--shadow-lg);
     margin-bottom: 30px;
     position: relative;
     overflow: hidden;
     animation: slideDown 0.5s ease-out;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    left: 0;
+    right: 0;
+    -webkit-animation: slideDown 0.5s ease-out;
 }
 
 .header-content {
@@ -15,6 +20,7 @@
     gap: 15px;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 20px; /* Padding ajouté ici */
 }
 
 .header-icon {
@@ -39,17 +45,19 @@
     }
     
     .header-icon {
-        size: 22px;
+        width: 22px;
+        height: 22px;
     }
     
     .header-content {
         gap: 12px;
+        padding: 0 15px;
     }
 }
 
 @media (max-width: 480px) {
     .Header {
-        padding: 15px;
+        padding: 15px 0;
     }
     
     .Header span {
@@ -57,11 +65,13 @@
     }
     
     .header-icon {
-        size: 20px;
+        width: 20px;
+        height: 20px;
     }
     
     .header-content {
         gap: 10px;
+        padding: 0 15px;
     }
 }
 
@@ -73,5 +83,6 @@
     .header-content {
         flex-direction: column;
         gap: 8px;
+        padding: 0 10px;
     }
 }
