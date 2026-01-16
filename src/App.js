@@ -27,8 +27,8 @@ export default function App() {
   };
 
   const handleEdit = (id) => {
-    const employeeToEdit = employees.find(emp => emp.id === id);
-    setEmployee(employeeToEdit);
+    const EditEmp = employees.find(emp => emp.id === id);
+    setEmployee(EditEmp);
   };
 
   return (
