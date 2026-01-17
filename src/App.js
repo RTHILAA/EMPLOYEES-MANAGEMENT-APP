@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./Components/Header/Header";
-import { 
-  UserRoundPen, 
-  UserRoundMinus, 
-  UserRoundPlus, 
-  SaveIcon, 
-  XCircle, 
-  Users, 
-  Calendar, 
-  DollarSign, 
-  Briefcase, 
-  Mail, 
-  Phone, 
-  Building, 
-  UserCheck, 
-  UsersRound, 
-  UserCog, 
-  UserX, 
+import {
+  UserRoundPen,
+  UserRoundMinus,
+  UserRoundPlus,
+  SaveIcon,
+  XCircle,
+  Users,
+  Calendar,
+  DollarSign,
+  Briefcase,
+  Mail,
+  Phone,
+  Building,
+  UserCheck,
+  UsersRound,
+  UserCog,
+  UserX,
   CalendarDays,
   UserRound,
-  Settings 
 } from "lucide-react";
 
 // StatsCard Component - intégré dans App.js
@@ -58,7 +57,7 @@ export default function App() {
   const [isEditing, setIsEditing] = useState(false);
   const [newEmployeeId, setNewEmployeeId] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
-  
+
   // Calculate stats
   const totalEmployees = employees.length;
   const activeEmployees = employees.filter(emp => emp.status === 'Active').length;
@@ -192,38 +191,39 @@ export default function App() {
             <CalendarDays size={24} />
             <span>Dashboard Overview</span>
           </div>
-          
+
           <div className="stats-grid">
             <StatsCard
               title="Total Employees"
               value={totalEmployees}
               icon={<UsersRound size={24} />}
               color="primary"
-              trend={`${totalEmployees > 0 ? '+0' : '0'} from last month`}
+              trend={totalEmployees === 0 ? 'No employees yet' : 'Team is growing'}
             />
-            
+
+
             <StatsCard
               title="Active"
               value={activeEmployees}
               icon={<UserCog size={24} />}
               color="success"
-              trend={`${activeEmployees} currently working`}
+              trend={activeEmployees === 0 ? 'No active employees' : 'Employees currently active'}
             />
-            
+
             <StatsCard
               title="On Leave"
               value={onLeaveEmployees}
               icon={<UserRoundPlus size={24} />}
               color="warning"
-              trend={`${onLeaveEmployees} away currently`}
+              trend={onLeaveEmployees === 0 ? 'No employees on leave' : 'Employees currently on leave'}
             />
-            
+
             <StatsCard
               title="Terminated"
               value={terminatedEmployees}
               icon={<UserX size={24} />}
               color="danger"
-              trend={`${terminatedEmployees} this year`}
+              trend={terminatedEmployees === 0 ? 'No terminations this year' : 'Exits this year'}
             />
           </div>
         </div>
@@ -425,60 +425,15 @@ export default function App() {
               <table className="employees-table">
                 <thead>
                   <tr>
-                    <th>
-                      <div className="table-header-with-icon">
-                        <UserRound size={16} />
-                        <span>Full Name</span>
-                      </div>
-                    </th>
-                    <th>
-                      <div className="table-header-with-icon">
-                        <Mail size={16} />
-                        <span>Email</span>
-                      </div>
-                    </th>
-                    <th>
-                      <div className="table-header-with-icon">
-                        <Phone size={16} />
-                        <span>Phone</span>
-                      </div>
-                    </th>
-                    <th>
-                      <div className="table-header-with-icon">
-                        <Building size={16} />
-                        <span>Department</span>
-                      </div>
-                    </th>
-                    <th>
-                      <div className="table-header-with-icon">
-                        <Briefcase size={16} />
-                        <span>Position</span>
-                      </div>
-                    </th>
-                    <th>
-                      <div className="table-header-with-icon">
-                        <Calendar size={16} />
-                        <span>Hire Date</span>
-                      </div>
-                    </th>
-                    <th>
-                      <div className="table-header-with-icon">
-                        <DollarSign size={16} />
-                        <span>Salary</span>
-                      </div>
-                    </th>
-                    <th>
-                      <div className="table-header-with-icon">
-                        <UserCheck size={16} />
-                        <span>Status</span>
-                      </div>
-                    </th>
-                    <th>
-                      <div className="table-header-with-icon">
-                        <Settings size={16} />
-                        <span>Actions</span>
-                      </div>
-                    </th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Department</th>
+                    <th>Position</th>
+                    <th>Hire Date</th>
+                    <th>Salary</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
 

@@ -5,9 +5,7 @@
   --success-color: #10b981;
   --warning-color: #f59e0b;
   --danger-color: #ef4444;
-  --light-bg: #f8fafc;
   --border-color: #e2e8f0;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   --transition-default: all 0.3s ease;
@@ -296,7 +294,7 @@ body {
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: var(--primary-color);
+  border-color: #94a3b8;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
   transform: translateY(-2px);
 }
@@ -377,14 +375,6 @@ body {
   height: 20px;
 }
 
-/* Styles pour les en-têtes avec icônes */
-.table-header-with-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
 .employees-table-container {
   width: 100%;
   margin: 30px 0;
@@ -418,10 +408,6 @@ body {
   letter-spacing: 0.5px;
   position: sticky;
   top: 0;
-}
-
-.employees-table th .table-header-with-icon svg {
-  color: #94a3b8;
 }
 
 .employees-table tbody tr {
@@ -641,11 +627,6 @@ body {
     height: 40px;
   }
   
-  .table-header-with-icon {
-    flex-direction: column;
-    gap: 4px;
-  }
-  
   .label-with-icon {
     flex-direction: column;
     align-items: flex-start;
@@ -685,10 +666,6 @@ body {
   .cancel-btn {
     padding: 12px 20px;
     font-size: 0.95rem;
-  }
-  
-  .table-header-with-icon span {
-    font-size: 0.8rem;
   }
 }
 
