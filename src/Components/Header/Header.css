@@ -1,7 +1,7 @@
 .Header {
     background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
     padding: 20px 0;
-    /*Paddinghorizontalà0*/box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-lg);
     margin-bottom: 30px;
     position: relative;
     overflow: hidden;

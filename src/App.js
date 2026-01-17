@@ -332,7 +332,7 @@ export default function App() {
 
               <div>
                 <label htmlFor="salary">
-                  Salary <span className="star">*</span>
+                  Salary (MAD) <span className="star">*</span>
                 </label>
                 <input
                   type="number"
@@ -471,11 +471,13 @@ export default function App() {
                             onClick={() => handleEdit(emp.id)}
                             className="edit-icon"
                             title="Edit"
+                            size={32}
                           />
                           <UserRoundMinus
                             onClick={() => handleDelete(emp.id)}
                             className="delete-icon"
                             title="Delete"
+                            size={32}
                           />
                         </td>
                       </tr>
