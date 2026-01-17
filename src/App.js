@@ -1,7 +1,27 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./Components/Header/Header";
-import { UserRoundPen, UserRoundMinus, UserRoundPlus, SaveIcon, XCircle, Users, Calendar, DollarSign, Briefcase, Mail, Phone, Building, UserCheck, UsersRound, UserCog, UserX, CalendarDays } from "lucide-react";
+import { 
+  UserRoundPen, 
+  UserRoundMinus, 
+  UserRoundPlus, 
+  SaveIcon, 
+  XCircle, 
+  Users, 
+  Calendar, 
+  DollarSign, 
+  Briefcase, 
+  Mail, 
+  Phone, 
+  Building, 
+  UserCheck, 
+  UsersRound, 
+  UserCog, 
+  UserX, 
+  CalendarDays,
+  UserRound,
+  Settings 
+} from "lucide-react";
 
 // StatsCard Component - intégré dans App.js
 const StatsCard = ({ title, value, icon, color = 'primary', trend }) => {
@@ -161,16 +181,6 @@ export default function App() {
     }
   };
 
-  const getDepartmentIcon = (department) => {
-    switch (department) {
-      case 'IT': return <Briefcase size={14} />;
-      case 'HR': return <Users size={14} />;
-      case 'Finance': return <DollarSign size={14} />;
-      case 'Sales': return <UserCheck size={14} />;
-      default: return <Building size={14} />;
-    }
-  };
-
   return (
     <div className="App">
       <div className="container">
@@ -227,8 +237,9 @@ export default function App() {
           <div className="form-group">
             <form onSubmit={handleSubmit}>
               <div>
-                <label htmlFor="fullname">
-                  Full Name <span className="star">*</span>
+                <label htmlFor="fullname" className="label-with-icon">
+                  <UserRound size={16} />
+                  <span>Full Name <span className="star">*</span></span>
                 </label>
                 <input
                   type="text"
@@ -241,8 +252,9 @@ export default function App() {
               </div>
 
               <div>
-                <label htmlFor="email">
-                  Email <span className="star">*</span>
+                <label htmlFor="email" className="label-with-icon">
+                  <Mail size={16} />
+                  <span>Email <span className="star">*</span></span>
                 </label>
                 <input
                   type="email"
@@ -255,8 +267,9 @@ export default function App() {
               </div>
 
               <div>
-                <label htmlFor="phone">
-                  Phone <span className="star">*</span>
+                <label htmlFor="phone" className="label-with-icon">
+                  <Phone size={16} />
+                  <span>Phone <span className="star">*</span></span>
                 </label>
                 <input
                   type="tel"
@@ -269,8 +282,9 @@ export default function App() {
               </div>
 
               <div>
-                <label htmlFor="department">
-                  Department <span className="star">*</span>
+                <label htmlFor="department" className="label-with-icon">
+                  <Building size={16} />
+                  <span>Department <span className="star">*</span></span>
                 </label>
                 <select
                   id="department"
@@ -287,8 +301,9 @@ export default function App() {
               </div>
 
               <div>
-                <label htmlFor="position">
-                  Position <span className="star">*</span>
+                <label htmlFor="position" className="label-with-icon">
+                  <Briefcase size={16} />
+                  <span>Position <span className="star">*</span></span>
                 </label>
                 <select
                   id="position"
@@ -318,8 +333,9 @@ export default function App() {
               </div>
 
               <div>
-                <label htmlFor="hiredate">
-                  Hire Date <span className="star">*</span>
+                <label htmlFor="hiredate" className="label-with-icon">
+                  <Calendar size={16} />
+                  <span>Hire Date <span className="star">*</span></span>
                 </label>
                 <input
                   type="date"
@@ -331,8 +347,9 @@ export default function App() {
               </div>
 
               <div>
-                <label htmlFor="salary">
-                  Salary (MAD) <span className="star">*</span>
+                <label htmlFor="salary" className="label-with-icon">
+                  <DollarSign size={16} />
+                  <span>Salary (MAD) <span className="star">*</span></span>
                 </label>
                 <input
                   type="number"
@@ -347,8 +364,9 @@ export default function App() {
               </div>
 
               <div>
-                <label htmlFor="status">
-                  Status <span className="star">*</span>
+                <label htmlFor="status" className="label-with-icon">
+                  <UserCheck size={16} />
+                  <span>Status <span className="star">*</span></span>
                 </label>
                 <select
                   id="status"
@@ -407,15 +425,60 @@ export default function App() {
               <table className="employees-table">
                 <thead>
                   <tr>
-                    <th>Full Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Department</th>
-                    <th>Position</th>
-                    <th>Hire Date</th>
-                    <th>Salary</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>
+                      <div className="table-header-with-icon">
+                        <UserRound size={16} />
+                        <span>Full Name</span>
+                      </div>
+                    </th>
+                    <th>
+                      <div className="table-header-with-icon">
+                        <Mail size={16} />
+                        <span>Email</span>
+                      </div>
+                    </th>
+                    <th>
+                      <div className="table-header-with-icon">
+                        <Phone size={16} />
+                        <span>Phone</span>
+                      </div>
+                    </th>
+                    <th>
+                      <div className="table-header-with-icon">
+                        <Building size={16} />
+                        <span>Department</span>
+                      </div>
+                    </th>
+                    <th>
+                      <div className="table-header-with-icon">
+                        <Briefcase size={16} />
+                        <span>Position</span>
+                      </div>
+                    </th>
+                    <th>
+                      <div className="table-header-with-icon">
+                        <Calendar size={16} />
+                        <span>Hire Date</span>
+                      </div>
+                    </th>
+                    <th>
+                      <div className="table-header-with-icon">
+                        <DollarSign size={16} />
+                        <span>Salary</span>
+                      </div>
+                    </th>
+                    <th>
+                      <div className="table-header-with-icon">
+                        <UserCheck size={16} />
+                        <span>Status</span>
+                      </div>
+                    </th>
+                    <th>
+                      <div className="table-header-with-icon">
+                        <Settings size={16} />
+                        <span>Actions</span>
+                      </div>
+                    </th>
                   </tr>
                 </thead>
 
@@ -429,38 +492,13 @@ export default function App() {
 
                     return (
                       <tr key={emp.id} className={rowClass} style={{ animationDelay: `${index * 0.05}s` }}>
-                        <td>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            {getDepartmentIcon(emp.department)}
-                            {emp.fullname}
-                          </div>
-                        </td>
-                        <td>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <Mail size={14} />
-                            {emp.email}
-                          </div>
-                        </td>
-                        <td>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <Phone size={14} />
-                            {emp.phone}
-                          </div>
-                        </td>
+                        <td>{emp.fullname}</td>
+                        <td>{emp.email}</td>
+                        <td>{emp.phone}</td>
                         <td>{emp.department}</td>
                         <td>{emp.position}</td>
-                        <td>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <Calendar size={14} />
-                            {formatDate(emp.hiredate)}
-                          </div>
-                        </td>
-                        <td className="salary-cell">
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <DollarSign size={14} />
-                            {formatSalary(emp.salary)}
-                          </div>
-                        </td>
+                        <td>{formatDate(emp.hiredate)}</td>
+                        <td className="salary-cell">{formatSalary(emp.salary)}</td>
                         <td>
                           <span className={`status-badge ${getStatusClass(emp.status)}`}>
                             {emp.status}

@@ -1,7 +1,7 @@
 :root {
   --primary-color: #2563eb;
   --primary-dark: #1d4ed8;
-  --secondary-color: #64748b;
+  --secondary-color: #94a3b8;
   --success-color: #10b981;
   --warning-color: #f59e0b;
   --danger-color: #ef4444;
@@ -19,12 +19,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+ 
 }
 
 body {
   background-color: #F9FAFB;
   font-family: 'Poppins', sans-serif;
-  color: #334155;
   overflow-x: hidden;
 }
 
@@ -219,8 +219,8 @@ body {
 
 .stats-card-title {
   font-size: 1rem;
-  font-weight: 500;
   color: var(--secondary-color);
+  font-weight: 500;
   margin-bottom: 8px;
 }
 
@@ -230,6 +230,24 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+/* Styles pour les labels avec icônes */
+.label-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  color: #344256;
+  font-weight: 500;
+  font-size: 0.95rem;
+  animation: slideIn 0.3s ease-out;
+  animation-fill-mode: both;
+  -webkit-animation: slideIn 0.3s ease-out;
+}
+
+.label-with-icon svg {
+  color: #344256;
 }
 
 /* Form Styles - 4 inputs par ligne */
@@ -256,21 +274,11 @@ body {
   box-shadow: var(--shadow-lg);
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: #475569;
-  font-size: 0.95rem;
-  animation: slideIn 0.3s ease-out;
-  animation-fill-mode: both;
-}
-
 .form-group input,
 .form-group select {
   width: 100%;
- padding: 8px 10px;
-  border: 2px solid var(--border-color);
+  padding: 8px 10px;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
   font-family: 'Poppins', sans-serif;
@@ -295,6 +303,11 @@ body {
 
 .form-group input::placeholder {
   color: #94a3b8;
+  font-size: 14px;
+}
+
+.form-group select {
+  color: #344256;
   font-size: 14px;
 }
 
@@ -364,6 +377,14 @@ body {
   height: 20px;
 }
 
+/* Styles pour les en-têtes avec icônes */
+.table-header-with-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
 .employees-table-container {
   width: 100%;
   margin: 30px 0;
@@ -382,6 +403,7 @@ body {
 .employees-table th,
 .employees-table td {
   width: 100%;
+  color: #344256;
   padding: 16px;
   border-bottom: 1px solid var(--border-color);
   text-align: center;
@@ -390,13 +412,16 @@ body {
 
 .employees-table th {
   background-color: #f1f5f9;
-  color: #334155;
   font-weight: 600;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   position: sticky;
   top: 0;
+}
+
+.employees-table th .table-header-with-icon svg {
+  color: #94a3b8;
 }
 
 .employees-table tbody tr {
@@ -615,6 +640,17 @@ body {
     width: 40px;
     height: 40px;
   }
+  
+  .table-header-with-icon {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .label-with-icon {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -649,6 +685,10 @@ body {
   .cancel-btn {
     padding: 12px 20px;
     font-size: 0.95rem;
+  }
+  
+  .table-header-with-icon span {
+    font-size: 0.8rem;
   }
 }
 
