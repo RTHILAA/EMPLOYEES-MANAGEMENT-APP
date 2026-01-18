@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 :root {
   --primary-color: #2563eb;
   --primary-dark: #1d4ed8;
@@ -10,8 +12,6 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   --transition-default: all 0.3s ease;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
   margin: 0;
@@ -280,10 +280,12 @@ body {
   border-radius: 8px;
   font-size: 1rem;
   font-family: 'Poppins', sans-serif;
-  background: white;
+  background: #F9FAFB;
   transition: var(--transition-default);
   animation: slideIn 0.4s ease-out;
   animation-fill-mode: both;
+  color: #344256;
+  font-size: 14px;
 }
 
 .form-group input:hover,
@@ -304,7 +306,8 @@ body {
   font-size: 14px;
 }
 
-.form-group select {
+.form-group select,
+.form-group .hiredate {
   color: #344256;
   font-size: 14px;
 }

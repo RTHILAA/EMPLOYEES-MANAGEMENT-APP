@@ -340,6 +340,7 @@ export default function App() {
                 <input
                   type="date"
                   id="hiredate"
+                  className="hiredate"
                   value={employee.hiredate || ""}
                   onChange={handleChange}
                   required
@@ -356,8 +357,6 @@ export default function App() {
                   id="salary"
                   value={employee.salary || ""}
                   placeholder="0.00"
-                  min="0"
-                  step="0.01"
                   onChange={handleChange}
                   required
                 />
