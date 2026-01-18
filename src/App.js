@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
 import "./App.css";
-import Header from "./Components/Header/Header";
 import * as XLSX from 'xlsx';
 import {
   UserRoundPen,
@@ -50,7 +49,12 @@ const StatsCard = ({ title, value, icon, color = 'primary', trend }) => {
 };
 
 export default function App() {
-  const [employees, setEmployees] = useState([]);
+  // Initialiser les états depuis localStorage
+  const [employees, setEmployees] = useState(() => {
+    const savedEmployees = localStorage.getItem('employees');
+    return savedEmployees ? JSON.parse(savedEmployees) : [];
+  });
+
   const [filteredEmployees, setFilteredEmployees] = useState([]);
   const [employee, setEmployee] = useState({
     fullname: "",
@@ -65,36 +69,42 @@ export default function App() {
   const [isEditing, setIsEditing] = useState(false);
   const [newEmployeeId, setNewEmployeeId] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
-  
-  // États pour la recherche et le filtrage
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filters, setFilters] = useState({
-    department: "all",
-    status: "all"
+
+  // États pour la recherche et le filtrage avec localStorage
+  const [searchTerm, setSearchTerm] = useState(() => {
+    const savedSearch = localStorage.getItem('searchTerm');
+    return savedSearch || "";
   });
+
+  const [filters, setFilters] = useState(() => {
+    const savedFilters = localStorage.getItem('filters');
+    return savedFilters ? JSON.parse(savedFilters) : {
+      department: "all",
+      status: "all"
+    };
+  });
+
   const [showFilters, setShowFilters] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+
+  // Sauvegarder dans localStorage quand les états changent
+  useEffect(() => {
+    localStorage.setItem('employees', JSON.stringify(employees));
+  }, [employees]);
+
+  useEffect(() => {
+    localStorage.setItem('searchTerm', searchTerm);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    localStorage.setItem('filters', JSON.stringify(filters));
+  }, [filters]);
 
   // Calculate stats
   const totalEmployees = employees.length;
   const activeEmployees = employees.filter(emp => emp.status === 'Active').length;
   const onLeaveEmployees = employees.filter(emp => emp.status === 'On leave').length;
   const terminatedEmployees = employees.filter(emp => emp.status === 'Terminated').length;
-
-  // Load employees from localStorage on initial render
-  useEffect(() => {
-    const savedEmployees = localStorage.getItem('employees');
-    if (savedEmployees) {
-      const parsedEmployees = JSON.parse(savedEmployees);
-      setEmployees(parsedEmployees);
-      setFilteredEmployees(parsedEmployees);
-    }
-  }, []);
-
-  // Save employees to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem('employees', JSON.stringify(employees));
-  }, [employees]);
 
   // Filtrer et rechercher les employés
   useEffect(() => {
@@ -275,11 +285,11 @@ export default function App() {
 
     // Créer une feuille de calcul
     const ws = XLSX.utils.json_to_sheet(exportData);
-    
+
     // Créer un nouveau classeur
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Employees');
-    
+
     // Générer le fichier Excel
     const fileName = `employees_${new Date().toISOString().split('T')[0]}.xlsx`;
     XLSX.writeFile(wb, fileName);
@@ -317,9 +327,17 @@ export default function App() {
   };
 
   return (
+    
     <div className="App">
       <div className="container">
-        <Header />
+        <div className="Header">
+      <div className="header-content">
+        <Users className="header-icon" size={28} />
+        <span>Employee Management System</span>
+      </div>
+    </div>
+
+
 
         {/* Stats Cards Section */}
         <div className="stats-section">
@@ -561,7 +579,7 @@ export default function App() {
                   className="search-input"
                 />
                 {searchTerm && (
-                  <button 
+                  <button
                     className="clear-search-btn"
                     onClick={() => setSearchTerm("")}
                     title="Clear search"
@@ -570,9 +588,9 @@ export default function App() {
                   </button>
                 )}
               </div>
-              
+
               <div className="filter-actions">
-                <button 
+                <button
                   className={`filter-toggle-btn ${showFilters ? 'active' : ''}`}
                   onClick={() => setShowFilters(!showFilters)}
                 >
@@ -582,8 +600,8 @@ export default function App() {
                     <span className="filter-badge"></span>
                   )}
                 </button>
-                
-                <button 
+
+                <button
                   className="export-btn"
                   onClick={exportToExcel}
                   disabled={filteredEmployees.length === 0}
@@ -591,9 +609,9 @@ export default function App() {
                   <Download size={18} />
                   <span>Export Excel</span>
                 </button>
-                
+
                 {(searchTerm || Object.values(filters).some(f => f !== "all")) && (
-                  <button 
+                  <button
                     className="clear-filters-btn"
                     onClick={clearFilters}
                   >
@@ -622,7 +640,7 @@ export default function App() {
                     ))}
                   </select>
                 </div>
-                
+
                 <div className="filter-group">
                   <label className="filter-label">
                     <UserCheck size={16} />
@@ -639,7 +657,7 @@ export default function App() {
                     ))}
                   </select>
                 </div>
-                
+
                 <div className="active-filters">
                   {filters.department !== "all" && (
                     <span className="active-filter-tag">
@@ -667,13 +685,13 @@ export default function App() {
               <Users size={80} />
               <h3>No Employees Found</h3>
               <p>
-                {employees.length === 0 
+                {employees.length === 0
                   ? "Start by adding your first employee using the form above."
                   : "No employees match your search criteria. Try different filters or clear them to see all employees."
                 }
               </p>
               {employees.length > 0 && filteredEmployees.length === 0 && (
-                <button 
+                <button
                   className="clear-filters-btn"
                   onClick={clearFilters}
                   style={{ marginTop: '20px' }}
