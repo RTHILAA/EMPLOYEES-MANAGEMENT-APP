@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./App.css";
 import Header from "./Components/Header/Header";
+import * as XLSX from 'xlsx';
 import {
   UserRoundPen,
   UserRoundMinus,
@@ -20,6 +21,12 @@ import {
   UserX,
   CalendarDays,
   UserRound,
+  Search,
+  Filter,
+  Download,
+  ChevronDown,
+  ChevronUp,
+  X
 } from "lucide-react";
 
 // StatsCard Component - intégré dans App.js
@@ -44,6 +51,7 @@ const StatsCard = ({ title, value, icon, color = 'primary', trend }) => {
 
 export default function App() {
   const [employees, setEmployees] = useState([]);
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
   const [employee, setEmployee] = useState({
     fullname: "",
     email: "",
@@ -57,6 +65,15 @@ export default function App() {
   const [isEditing, setIsEditing] = useState(false);
   const [newEmployeeId, setNewEmployeeId] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
+  
+  // États pour la recherche et le filtrage
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filters, setFilters] = useState({
+    department: "all",
+    status: "all"
+  });
+  const [showFilters, setShowFilters] = useState(false);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
 
   // Calculate stats
   const totalEmployees = employees.length;
@@ -68,7 +85,9 @@ export default function App() {
   useEffect(() => {
     const savedEmployees = localStorage.getItem('employees');
     if (savedEmployees) {
-      setEmployees(JSON.parse(savedEmployees));
+      const parsedEmployees = JSON.parse(savedEmployees);
+      setEmployees(parsedEmployees);
+      setFilteredEmployees(parsedEmployees);
     }
   }, []);
 
@@ -76,6 +95,65 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('employees', JSON.stringify(employees));
   }, [employees]);
+
+  // Filtrer et rechercher les employés
+  useEffect(() => {
+    let result = [...employees];
+
+    // Appliquer la recherche
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      result = result.filter(emp =>
+        emp.fullname?.toLowerCase().includes(term) ||
+        emp.email?.toLowerCase().includes(term) ||
+        emp.phone?.toLowerCase().includes(term) ||
+        emp.department?.toLowerCase().includes(term) ||
+        emp.position?.toLowerCase().includes(term) ||
+        emp.status?.toLowerCase().includes(term)
+      );
+    }
+
+    // Appliquer les filtres
+    if (filters.department !== "all") {
+      result = result.filter(emp => emp.department === filters.department);
+    }
+
+    if (filters.status !== "all") {
+      result = result.filter(emp => emp.status === filters.status);
+    }
+
+    // Appliquer le tri
+    if (sortConfig.key) {
+      result.sort((a, b) => {
+        let aValue = a[sortConfig.key];
+        let bValue = b[sortConfig.key];
+
+        // Pour le tri numérique des salaires
+        if (sortConfig.key === 'salary') {
+          aValue = parseFloat(aValue?.replace(/,/g, '') || 0);
+          bValue = parseFloat(bValue?.replace(/,/g, '') || 0);
+        }
+
+        if (aValue < bValue) {
+          return sortConfig.direction === 'asc' ? -1 : 1;
+        }
+        if (aValue > bValue) {
+          return sortConfig.direction === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+
+    setFilteredEmployees(result);
+  }, [employees, searchTerm, filters, sortConfig]);
+
+  const handleSort = (key) => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+  };
 
   const handleChange = (e) => {
     const id = e.target.id;
@@ -101,7 +179,8 @@ export default function App() {
         hiredate: formatDate(employee.hiredate),
         salary: formatSalary(employee.salary)
       };
-      setEmployees([NewEmp, ...employees]);
+      const newEmployeesList = [NewEmp, ...employees];
+      setEmployees(newEmployeesList);
       setNewEmployeeId(NewEmp.id);
 
       // Clear highlight after animation
@@ -180,6 +259,63 @@ export default function App() {
     }
   };
 
+  // Fonction pour exporter vers Excel
+  const exportToExcel = () => {
+    // Préparer les données pour l'export
+    const exportData = filteredEmployees.map(emp => ({
+      'Full Name': emp.fullname,
+      'Email': emp.email,
+      'Phone': emp.phone,
+      'Department': emp.department,
+      'Position': emp.position,
+      'Hire Date': formatDate(emp.hiredate),
+      'Salary (MAD)': formatSalary(emp.salary),
+      'Status': emp.status
+    }));
+
+    // Créer une feuille de calcul
+    const ws = XLSX.utils.json_to_sheet(exportData);
+    
+    // Créer un nouveau classeur
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Employees');
+    
+    // Générer le fichier Excel
+    const fileName = `employees_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(wb, fileName);
+  };
+
+  // Obtenir les options uniques pour les filtres
+  const departments = useMemo(() => {
+    const depts = [...new Set(employees.map(emp => emp.department))];
+    return depts.filter(dept => dept);
+  }, [employees]);
+
+  const statuses = useMemo(() => {
+    const stats = [...new Set(employees.map(emp => emp.status))];
+    return stats.filter(stat => stat);
+  }, [employees]);
+
+  const handleFilterChange = (filterType, value) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: value
+    }));
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      department: "all",
+      status: "all"
+    });
+    setSearchTerm("");
+  };
+
+  const SortIndicator = ({ columnKey }) => {
+    if (sortConfig.key !== columnKey) return null;
+    return sortConfig.direction === 'asc' ? <ChevronUp size={14} /> : <ChevronDown size={14} />;
+  };
+
   return (
     <div className="App">
       <div className="container">
@@ -200,7 +336,6 @@ export default function App() {
               color="primary"
               trend={totalEmployees === 0 ? 'No employees yet' : 'Team is growing'}
             />
-
 
             <StatsCard
               title="Active"
@@ -410,34 +545,178 @@ export default function App() {
         <div className="list-section">
           <div className="title">
             <Users size={24} />
-            <span>Employees List ({employees.length})</span>
+            <span>Employees List ({filteredEmployees.length} of {employees.length})</span>
           </div>
 
-          {employees.length === 0 ? (
+          {/* Section de Recherche et Filtres */}
+          <div className="search-filters-section">
+            <div className="search-box-container">
+              <div className="search-box">
+                <Search size={20} className="search-icon" />
+                <input
+                  type="text"
+                  placeholder="Search employees by name, email, phone, department, position..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="search-input"
+                />
+                {searchTerm && (
+                  <button 
+                    className="clear-search-btn"
+                    onClick={() => setSearchTerm("")}
+                    title="Clear search"
+                  >
+                    <X size={18} />
+                  </button>
+                )}
+              </div>
+              
+              <div className="filter-actions">
+                <button 
+                  className={`filter-toggle-btn ${showFilters ? 'active' : ''}`}
+                  onClick={() => setShowFilters(!showFilters)}
+                >
+                  <Filter size={18} />
+                  <span>Filters</span>
+                  {Object.values(filters).some(f => f !== "all") && (
+                    <span className="filter-badge"></span>
+                  )}
+                </button>
+                
+                <button 
+                  className="export-btn"
+                  onClick={exportToExcel}
+                  disabled={filteredEmployees.length === 0}
+                >
+                  <Download size={18} />
+                  <span>Export Excel</span>
+                </button>
+                
+                {(searchTerm || Object.values(filters).some(f => f !== "all")) && (
+                  <button 
+                    className="clear-filters-btn"
+                    onClick={clearFilters}
+                  >
+                    <X size={18} />
+                    <span>Clear All</span>
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {showFilters && (
+              <div className="filters-panel">
+                <div className="filter-group">
+                  <label className="filter-label">
+                    <Building size={16} />
+                    <span>Department</span>
+                  </label>
+                  <select
+                    value={filters.department}
+                    onChange={(e) => handleFilterChange('department', e.target.value)}
+                    className="filter-select"
+                  >
+                    <option value="all">All Departments</option>
+                    {departments.map(dept => (
+                      <option key={dept} value={dept}>{dept}</option>
+                    ))}
+                  </select>
+                </div>
+                
+                <div className="filter-group">
+                  <label className="filter-label">
+                    <UserCheck size={16} />
+                    <span>Status</span>
+                  </label>
+                  <select
+                    value={filters.status}
+                    onChange={(e) => handleFilterChange('status', e.target.value)}
+                    className="filter-select"
+                  >
+                    <option value="all">All Statuses</option>
+                    {statuses.map(status => (
+                      <option key={status} value={status}>{status}</option>
+                    ))}
+                  </select>
+                </div>
+                
+                <div className="active-filters">
+                  {filters.department !== "all" && (
+                    <span className="active-filter-tag">
+                      Department: {filters.department}
+                      <button onClick={() => handleFilterChange('department', 'all')}>
+                        <X size={12} />
+                      </button>
+                    </span>
+                  )}
+                  {filters.status !== "all" && (
+                    <span className="active-filter-tag">
+                      Status: {filters.status}
+                      <button onClick={() => handleFilterChange('status', 'all')}>
+                        <X size={12} />
+                      </button>
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {filteredEmployees.length === 0 ? (
             <div className="empty-state">
               <Users size={80} />
               <h3>No Employees Found</h3>
-              <p>Start by adding your first employee using the form above.</p>
+              <p>
+                {employees.length === 0 
+                  ? "Start by adding your first employee using the form above."
+                  : "No employees match your search criteria. Try different filters or clear them to see all employees."
+                }
+              </p>
+              {employees.length > 0 && filteredEmployees.length === 0 && (
+                <button 
+                  className="clear-filters-btn"
+                  onClick={clearFilters}
+                  style={{ marginTop: '20px' }}
+                >
+                  Clear All Filters
+                </button>
+              )}
             </div>
           ) : (
             <div className="employees-table-container">
               <table className="employees-table">
                 <thead>
                   <tr>
-                    <th>Full Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Department</th>
-                    <th>Position</th>
-                    <th>Hire Date</th>
-                    <th>Salary</th>
-                    <th>Status</th>
+                    <th onClick={() => handleSort('fullname')} className="sortable">
+                      Full Name <SortIndicator columnKey="fullname" />
+                    </th>
+                    <th onClick={() => handleSort('email')} className="sortable">
+                      Email <SortIndicator columnKey="email" />
+                    </th>
+                    <th onClick={() => handleSort('phone')} className="sortable">
+                      Phone <SortIndicator columnKey="phone" />
+                    </th>
+                    <th onClick={() => handleSort('department')} className="sortable">
+                      Department <SortIndicator columnKey="department" />
+                    </th>
+                    <th onClick={() => handleSort('position')} className="sortable">
+                      Position <SortIndicator columnKey="position" />
+                    </th>
+                    <th onClick={() => handleSort('hiredate')} className="sortable">
+                      Hire Date <SortIndicator columnKey="hiredate" />
+                    </th>
+                    <th onClick={() => handleSort('salary')} className="sortable">
+                      Salary <SortIndicator columnKey="salary" />
+                    </th>
+                    <th onClick={() => handleSort('status')} className="sortable">
+                      Status <SortIndicator columnKey="status" />
+                    </th>
                     <th>Actions</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  {employees.map((emp, index) => {
+                  {filteredEmployees.map((emp, index) => {
                     const rowClass = [
                       newEmployeeId === emp.id ? 'new-employee' : '',
                       deletingId === emp.id ? 'deleting' : '',
