@@ -14,7 +14,6 @@ import {
   Mail,
   Phone,
   Building,
-  UserCheck,
   UsersRound,
   UserRoundCheck,
   UserRoundX,
@@ -517,7 +516,7 @@ export default function App() {
 
               <div>
                 <label htmlFor="status" className="label-with-icon">
-                  <UserCheck size={16} />
+                  <UserRound size={16} />
                   <span>Status <span className="star">*</span></span>
                 </label>
                 <select
@@ -643,7 +642,7 @@ export default function App() {
 
                 <div className="filter-group">
                   <label className="filter-label">
-                    <UserCheck size={16} />
+                    <UserRound size={16} />
                     <span>Status</span>
                   </label>
                   <select
