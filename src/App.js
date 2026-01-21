@@ -27,7 +27,7 @@ import {
   X
 } from "lucide-react";
 
-// StatsCard Component - intégré dans App.js
+// StatsCard Component
 const StatsCard = ({ title, value, icon, color = 'primary', trend }) => {
   return (
     <div className={`stats-card ${color}`}>
@@ -48,7 +48,7 @@ const StatsCard = ({ title, value, icon, color = 'primary', trend }) => {
 };
 
 export default function App() {
-  // Initialiser les états depuis localStorage
+  // Initialize states from localStorage
   const [employees, setEmployees] = useState(() => {
     const savedEmployees = localStorage.getItem('employees');
     return savedEmployees ? JSON.parse(savedEmployees) : [];
@@ -69,7 +69,7 @@ export default function App() {
   const [newEmployeeId, setNewEmployeeId] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
 
-  // États pour la recherche et le filtrage avec localStorage
+  // States for search and filtering with localStorage
   const [searchTerm, setSearchTerm] = useState(() => {
     const savedSearch = localStorage.getItem('searchTerm');
     return savedSearch || "";
@@ -86,7 +86,7 @@ export default function App() {
   const [showFilters, setShowFilters] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
 
-  // Sauvegarder dans localStorage quand les états changent
+  // Save to localStorage when states change
   useEffect(() => {
     localStorage.setItem('employees', JSON.stringify(employees));
   }, [employees]);
@@ -105,11 +105,11 @@ export default function App() {
   const onLeaveEmployees = employees.filter(emp => emp.status === 'On leave').length;
   const terminatedEmployees = employees.filter(emp => emp.status === 'Terminated').length;
 
-  // Filtrer et rechercher les employés
+  // Filter and search employees
   useEffect(() => {
     let result = [...employees];
 
-    // Appliquer la recherche
+    // Apply search
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       result = result.filter(emp =>
@@ -122,7 +122,7 @@ export default function App() {
       );
     }
 
-    // Appliquer les filtres
+    // Apply filters
     if (filters.department !== "all") {
       result = result.filter(emp => emp.department === filters.department);
     }
@@ -131,13 +131,13 @@ export default function App() {
       result = result.filter(emp => emp.status === filters.status);
     }
 
-    // Appliquer le tri
+    // Apply sorting
     if (sortConfig.key) {
       result.sort((a, b) => {
         let aValue = a[sortConfig.key];
         let bValue = b[sortConfig.key];
 
-        // Pour le tri numérique des salaires
+        // For numeric sorting of salaries
         if (sortConfig.key === 'salary') {
           aValue = parseFloat(aValue?.replace(/,/g, '') || 0);
           bValue = parseFloat(bValue?.replace(/,/g, '') || 0);
@@ -268,9 +268,9 @@ export default function App() {
     }
   };
 
-  // Fonction pour exporter vers Excel
+  // Function to export to Excel
   const exportToExcel = () => {
-    // Préparer les données pour l'export
+    // Prepare data for export
     const exportData = filteredEmployees.map(emp => ({
       'Full Name': emp.fullname,
       'Email': emp.email,
@@ -282,19 +282,19 @@ export default function App() {
       'Status': emp.status
     }));
 
-    // Créer une feuille de calcul
+    // Create a worksheet
     const ws = XLSX.utils.json_to_sheet(exportData);
 
-    // Créer un nouveau classeur
+    // Create a new workbook
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Employees');
 
-    // Générer le fichier Excel
+    // Generate Excel file
     const fileName = `employees_${new Date().toISOString().split('T')[0]}.xlsx`;
     XLSX.writeFile(wb, fileName);
   };
 
-  // Obtenir les options uniques pour les filtres
+  // Get unique options for filters
   const departments = useMemo(() => {
     const depts = [...new Set(employees.map(emp => emp.department))];
     return depts.filter(dept => dept);
@@ -326,17 +326,14 @@ export default function App() {
   };
 
   return (
-    
     <div className="App">
       <div className="container">
         <div className="Header">
-      <div className="header-content">
-        <UsersRound className="header-icon" size={28} />
-        <span>Employee Management System</span>
-      </div>
-    </div>
-
-
+          <div className="header-content">
+            <UsersRound className="header-icon" size={28} />
+            <span>Employee Management System</span>
+          </div>
+        </div>
 
         {/* Stats Cards Section */}
         <div className="stats-section">
@@ -445,10 +442,30 @@ export default function App() {
                   required
                 >
                   <option value="">Select Department</option>
-                  <option value="IT">Information Technology (IT)</option>
-                  <option value="HR">Human Resources (HR)</option>
-                  <option value="Finance">Finance</option>
-                  <option value="Sales">Sales</option>
+                  <option 
+                    value="IT" 
+                    className="option-it"
+                  >
+                    Information Technology (IT)
+                  </option>
+                  <option 
+                    value="HR" 
+                    className="option-hr"
+                  >
+                    Human Resources (HR)
+                  </option>
+                  <option 
+                    value="Finance" 
+                    className="option-finance"
+                  >
+                    Finance
+                  </option>
+                  <option 
+                    value="Sales" 
+                    className="option-sales"
+                  >
+                    Sales
+                  </option>
                 </select>
               </div>
 
@@ -464,23 +481,61 @@ export default function App() {
                   required
                 >
                   <option value="">Select Position</option>
-                  <option value="IT Manager">IT Manager</option>
-                  <option value="HR Manager">HR Manager</option>
-                  <option value="Finance Manager">Finance Manager</option>
-                  <option value="Sales Manager">Sales Manager</option>
-                  <option value="Software Developer">Software Developer</option>
-                  <option value="HR Officer">HR Officer</option>
-                  <option value="Accountant">Accountant</option>
-                  <option value="Sales Representative">
-                    Sales Representative
-                  </option>
-                  <option value="System Administrator">
-                    System Administrator
-                  </option>
-                  <option value="Recruiter">Recruiter</option>
-                  <option value="Financial Analyst">Financial Analyst</option>
-                  <option value="Sales Coordinator">Sales Coordinator</option>
-                  <option value="Helpdesk Technician">Helpdesk Technician</option>
+                  
+                  {/* IT Positions */}
+                  <optgroup label="Information Technology">
+                    <option value="IT Manager">
+                      IT Manager
+                    </option>
+                    <option value="Software Developer">
+                      Software Developer
+                    </option>
+                    <option value="System Administrator">
+                      System Administrator
+                    </option>
+                    <option value="Helpdesk Technician">
+                      Helpdesk Technician
+                    </option>
+                  </optgroup>
+                  
+                  {/* HR Positions */}
+                  <optgroup label="Human Resources">
+                    <option value="HR Manager">
+                      HR Manager
+                    </option>
+                    <option value="HR Officer">
+                      HR Officer
+                    </option>
+                    <option value="Recruiter">
+                      Recruiter
+                    </option>
+                  </optgroup>
+                  
+                  {/* Finance Positions */}
+                  <optgroup label="Finance">
+                    <option value="Finance Manager">
+                      Finance Manager
+                    </option>
+                    <option value="Accountant">
+                      Accountant
+                    </option>
+                    <option value="Financial Analyst">
+                      Financial Analyst
+                    </option>
+                  </optgroup>
+                  
+                  {/* Sales Positions */}
+                  <optgroup label="Sales">
+                    <option value="Sales Manager">
+                      Sales Manager
+                    </option>
+                    <option value="Sales Representative">
+                      Sales Representative
+                    </option>
+                    <option value="Sales Coordinator">
+                      Sales Coordinator
+                    </option>
+                  </optgroup>
                 </select>
               </div>
 
@@ -565,7 +620,7 @@ export default function App() {
             <span>Employees List ({filteredEmployees.length} of {employees.length})</span>
           </div>
 
-          {/* Section de Recherche et Filtres */}
+          {/* Search and Filters Section */}
           <div className="search-filters-section">
             <div className="search-box-container">
               <div className="search-box">
