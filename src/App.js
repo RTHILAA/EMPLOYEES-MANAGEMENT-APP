@@ -5,9 +5,9 @@ import {
   UserRoundPen,
   UserRoundMinus,
   UserRoundPlus,
+  CalendarOff,
   SaveIcon,
   XCircle,
-  Users,
   Calendar,
   DollarSign,
   Briefcase,
@@ -16,8 +16,8 @@ import {
   Building,
   UserCheck,
   UsersRound,
-  UserCog,
-  UserX,
+  UserRoundCheck,
+  UserRoundX,
   CalendarDays,
   UserRound,
   Search,
@@ -332,7 +332,7 @@ export default function App() {
       <div className="container">
         <div className="Header">
       <div className="header-content">
-        <Users className="header-icon" size={28} />
+        <UsersRound className="header-icon" size={28} />
         <span>Employee Management System</span>
       </div>
     </div>
@@ -358,7 +358,7 @@ export default function App() {
             <StatsCard
               title="Active"
               value={activeEmployees}
-              icon={<UserCog size={24} />}
+              icon={<UserRoundCheck size={24} />}
               color="success"
               trend={activeEmployees === 0 ? 'No active employees' : 'Employees currently active'}
             />
@@ -366,7 +366,7 @@ export default function App() {
             <StatsCard
               title="On Leave"
               value={onLeaveEmployees}
-              icon={<UserRoundPlus size={24} />}
+              icon={<CalendarOff size={24} />}
               color="warning"
               trend={onLeaveEmployees === 0 ? 'No employees on leave' : 'Employees currently on leave'}
             />
@@ -374,7 +374,7 @@ export default function App() {
             <StatsCard
               title="Terminated"
               value={terminatedEmployees}
-              icon={<UserX size={24} />}
+              icon={<UserRoundX size={24} />}
               color="danger"
               trend={terminatedEmployees === 0 ? 'No terminations this year' : 'Exits this year'}
             />
@@ -562,7 +562,7 @@ export default function App() {
 
         <div className="list-section">
           <div className="title">
-            <Users size={24} />
+            <UsersRound size={24} />
             <span>Employees List ({filteredEmployees.length} of {employees.length})</span>
           </div>
 
@@ -682,7 +682,7 @@ export default function App() {
 
           {filteredEmployees.length === 0 ? (
             <div className="empty-state">
-              <Users size={80} />
+              <UsersRound size={80} />
               <h3>No Employees Found</h3>
               <p>
                 {employees.length === 0
