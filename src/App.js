@@ -188,10 +188,8 @@ export default function App() {
         hiredate: formatDate(employee.hiredate),
         salary: formatSalary(employee.salary)
       };
-      const newEmployeesList = [NewEmp, ...employees];
-      setEmployees(newEmployeesList);
+      setEmployees([...employees, NewEmp]);
       setNewEmployeeId(NewEmp.id);
-
       // Clear highlight after animation
       setTimeout(() => setNewEmployeeId(null), 1000);
     }
