@@ -22,8 +22,6 @@ import {
   Search,
   Filter,
   Download,
-  ChevronDown,
-  ChevronUp,
   X
 } from "lucide-react";
 
@@ -84,7 +82,6 @@ export default function App() {
   });
 
   const [showFilters, setShowFilters] = useState(false);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
 
   // Save to localStorage when states change
   useEffect(() => {
@@ -131,38 +128,8 @@ export default function App() {
       result = result.filter(emp => emp.status === filters.status);
     }
 
-    // Apply sorting
-    if (sortConfig.key) {
-      result.sort((a, b) => {
-        let aValue = a[sortConfig.key];
-        let bValue = b[sortConfig.key];
-
-        // For numeric sorting of salaries
-        if (sortConfig.key === 'salary') {
-          aValue = parseFloat(aValue?.replace(/,/g, '') || 0);
-          bValue = parseFloat(bValue?.replace(/,/g, '') || 0);
-        }
-
-        if (aValue < bValue) {
-          return sortConfig.direction === 'asc' ? -1 : 1;
-        }
-        if (aValue > bValue) {
-          return sortConfig.direction === 'asc' ? 1 : -1;
-        }
-        return 0;
-      });
-    }
-
     setFilteredEmployees(result);
-  }, [employees, searchTerm, filters, sortConfig]);
-
-  const handleSort = (key) => {
-    let direction = 'asc';
-    if (sortConfig.key === key && sortConfig.direction === 'asc') {
-      direction = 'desc';
-    }
-    setSortConfig({ key, direction });
-  };
+  }, [employees, searchTerm, filters]);
 
   const handleChange = (e) => {
     const id = e.target.id;
@@ -316,11 +283,6 @@ export default function App() {
       status: "all"
     });
     setSearchTerm("");
-  };
-
-  const SortIndicator = ({ columnKey }) => {
-    if (sortConfig.key !== columnKey) return null;
-    return sortConfig.direction === 'asc' ? <ChevronUp size={14} /> : <ChevronDown size={14} />;
   };
 
   return (
@@ -757,30 +719,14 @@ export default function App() {
               <table className="employees-table">
                 <thead>
                   <tr>
-                    <th onClick={() => handleSort('fullname')} className="sortable">
-                      Full Name <SortIndicator columnKey="fullname" />
-                    </th>
-                    <th onClick={() => handleSort('email')} className="sortable">
-                      Email <SortIndicator columnKey="email" />
-                    </th>
-                    <th onClick={() => handleSort('phone')} className="sortable">
-                      Phone <SortIndicator columnKey="phone" />
-                    </th>
-                    <th onClick={() => handleSort('department')} className="sortable">
-                      Department <SortIndicator columnKey="department" />
-                    </th>
-                    <th onClick={() => handleSort('position')} className="sortable">
-                      Position <SortIndicator columnKey="position" />
-                    </th>
-                    <th onClick={() => handleSort('hiredate')} className="sortable">
-                      Hire Date <SortIndicator columnKey="hiredate" />
-                    </th>
-                    <th onClick={() => handleSort('salary')} className="sortable">
-                      Salary <SortIndicator columnKey="salary" />
-                    </th>
-                    <th onClick={() => handleSort('status')} className="sortable">
-                      Status <SortIndicator columnKey="status" />
-                    </th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Department</th>
+                    <th>Position</th>
+                    <th>Hire Date</th>
+                    <th>Salary</th>
+                    <th>Status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>

@@ -908,30 +908,6 @@ body {
   background: rgba(37, 99, 235, 0.2);
 }
 
-/* Sortable Table Headers */
-.sortable {
-  cursor: pointer;
-  user-select: none;
-  transition: var(--transition-default);
-  position: relative;
-}
-
-.sortable:hover {
-  background-color: rgba(37, 99, 235, 0.05);
-}
-
-.sortable .sort-indicator {
-  margin-left: 5px;
-  opacity: 0.5;
-  transition: var(--transition-default);
-  display: inline-flex;
-  align-items: center;
-}
-
-.sortable:hover .sort-indicator {
-  opacity: 1;
-}
-
 /* Responsive Design pour le formulaire 4 colonnes */
 
 /* Pour écrans larges - 4 colonnes */
