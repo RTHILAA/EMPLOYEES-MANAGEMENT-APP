@@ -490,16 +490,17 @@ body {
 .employees-table td {
   width: 100%;
   color: #344256;
-  padding: 16px;
-  border-bottom: 1px solid var(--border-color);
+  padding: 10px;
   text-align: center;
+  border-bottom: 1px solid var(--border-color);
   transition: var(--transition-default);
 }
 
 .employees-table th {
-  background-color: #f1f5f9;
+  background-color: #F4F7F9;
+  color: #65758b;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   position: sticky;
@@ -558,15 +559,9 @@ body {
   color: #991b1b;
 }
 
-.salary-cell {
-  font-weight: 600;
-  color: var(--primary-color);
-}
-
 .salary-cell::after {
   content: ' MAD';
-  font-size: 0.9em;
-  opacity: 0.7;
+  font-size: 0.9rem;
 }
 
 .actions {

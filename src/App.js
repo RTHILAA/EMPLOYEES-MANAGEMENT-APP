@@ -523,7 +523,7 @@ export default function App() {
                   type="number"
                   id="salary"
                   value={employee.salary || ""}
-                  placeholder="0.00"
+                  placeholder="e.g. 5000"
                   onChange={handleChange}
                   required
                 />
