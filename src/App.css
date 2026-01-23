@@ -474,7 +474,7 @@ body {
 .employees-table-container {
   width: 100%;
   margin: 30px 0;
-  overflow-x: auto;
+  overflow: hidden;
   border-radius: 12px;
   box-shadow: var(--shadow-md);
   animation: slideIn 0.5s ease-out;
@@ -488,10 +488,8 @@ body {
 
 .employees-table th,
 .employees-table td {
-  width: 100%;
-  color: #344256;
-  padding: 10px;
-  text-align: center;
+  padding: 14px;
+  text-align: center; /* تغيير المحاذاة لليسار */
   border-bottom: 1px solid var(--border-color);
   transition: var(--transition-default);
 }
