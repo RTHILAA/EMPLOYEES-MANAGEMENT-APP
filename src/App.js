@@ -153,7 +153,8 @@ export default function App() {
         ...employee,
         id: Date.now(),
         hiredate: formatDate(employee.hiredate),
-        salary: formatSalary(employee.salary)
+        // حفظ الرقم بدون تنسيق
+        salary: employee.salary
       };
       setEmployees([...employees, NewEmp]);
       setNewEmployeeId(NewEmp.id);
@@ -218,9 +219,11 @@ export default function App() {
 
   const formatSalary = (salary) => {
     if (!salary) return "";
-    return parseFloat(salary).toLocaleString('en-US', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+    const salaryNumber = parseFloat(salary);
+    // تنسيق الرقم بدون كسور عشرية
+    return salaryNumber.toLocaleString('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
     });
   };
 
