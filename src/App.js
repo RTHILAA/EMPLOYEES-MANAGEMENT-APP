@@ -22,7 +22,11 @@ import {
   Search,
   Filter,
   Download,
-  X
+  X,
+  CheckCircle,
+  AlertCircle,
+  Info,
+  Trash2
 } from "lucide-react";
 
 // StatsCard Component
@@ -40,6 +44,89 @@ const StatsCard = ({ title, value, icon, color = 'primary', trend }) => {
       </div>
       <div className="stats-card-trend">
         {trend}
+      </div>
+    </div>
+  );
+};
+
+// Notification Component
+const Notification = ({ type, title, message, onClose }) => {
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(false);
+      setTimeout(() => {
+        onClose();
+      }, 300); // وقت للرسوم المتحركة
+    }, 3000); // الإشعار يختفي بعد 3 ثواني
+
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  const getIcon = () => {
+    switch (type) {
+      case 'success': return <CheckCircle size={18} />;
+      case 'warning': return <AlertCircle size={18} />;
+      case 'danger': return <X size={18} />;
+      case 'info': return <Info size={18} />;
+      default: return <Info size={18} />;
+    }
+  };
+
+  return (
+    <div className={`notification ${type} ${isVisible ? 'show' : 'hide'}`}>
+      <div className="notification-icon">
+        {getIcon()}
+      </div>
+      <div className="notification-content">
+        <div className="notification-title">{title}</div>
+        <div className="notification-message">{message}</div>
+      </div>
+      <button className="notification-close" onClick={() => {
+        setIsVisible(false);
+        setTimeout(onClose, 300);
+      }}>
+        <X size={16} />
+      </button>
+    </div>
+  );
+};
+
+// Confirmation Dialog Component
+const ConfirmationDialog = ({ 
+  isOpen, 
+  onClose, 
+  onConfirm, 
+  title, 
+  message, 
+  confirmText = "Delete", 
+  cancelText = "Cancel" 
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="confirmation-overlay">
+      <div className="confirmation-dialog">
+        <h3>
+          <Trash2 size={24} />
+          {title}
+        </h3>
+        <p>{message}</p>
+        <div className="confirmation-actions">
+          <button 
+            className="cancel-btn-confirm" 
+            onClick={onClose}
+          >
+            {cancelText}
+          </button>
+          <button 
+            className="confirm-btn" 
+            onClick={onConfirm}
+          >
+            {confirmText}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -82,6 +169,11 @@ export default function App() {
   });
 
   const [showFilters, setShowFilters] = useState(false);
+
+  // Notification states
+  const [notifications, setNotifications] = useState([]);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [employeeToDelete, setEmployeeToDelete] = useState(null);
 
   // Save to localStorage when states change
   useEffect(() => {
@@ -131,6 +223,16 @@ export default function App() {
     setFilteredEmployees(result);
   }, [employees, searchTerm, filters]);
 
+  // Notification functions
+  const showNotification = (type, title, message) => {
+    const id = Date.now();
+    setNotifications(prev => [...prev, { id, type, title, message }]);
+  };
+
+  const removeNotification = (id) => {
+    setNotifications(prev => prev.filter(notification => notification.id !== id));
+  };
+
   const handleChange = (e) => {
     const id = e.target.id;
     const value = e.target.value;
@@ -147,17 +249,31 @@ export default function App() {
       );
       setEmployees(updatedEmployees);
       setIsEditing(false);
+      
+      // Show success notification
+      showNotification(
+        'success',
+        'Employee Updated',
+        `${employee.fullname} has been successfully updated.`
+      );
     } else {
       // Add new employee
       const NewEmp = {
         ...employee,
         id: Date.now(),
         hiredate: formatDate(employee.hiredate),
-        // حفظ الرقم بدون تنسيق
         salary: employee.salary
       };
       setEmployees([...employees, NewEmp]);
       setNewEmployeeId(NewEmp.id);
+      
+      // Show success notification
+      showNotification(
+        'success',
+        'Employee Added',
+        `${employee.fullname} has been successfully added to the system.`
+      );
+      
       // Clear highlight after animation
       setTimeout(() => setNewEmployeeId(null), 1000);
     }
@@ -175,21 +291,51 @@ export default function App() {
     });
   };
 
-  const handleDelete = (id) => {
-    setDeletingId(id);
+  const handleDeleteClick = (id, name) => {
+    setEmployeeToDelete({ id, name });
+    setShowConfirmDialog(true);
+  };
 
-    // Add animation delay before actual deletion
-    setTimeout(() => {
-      const UpdatedEmp = employees.filter(emp => emp.id !== id);
-      setEmployees(UpdatedEmp);
-      setDeletingId(null);
-    }, 500);
+  const handleConfirmDelete = () => {
+    if (employeeToDelete) {
+      setDeletingId(employeeToDelete.id);
+      
+      // Add animation delay before actual deletion
+      setTimeout(() => {
+        const UpdatedEmp = employees.filter(emp => emp.id !== employeeToDelete.id);
+        setEmployees(UpdatedEmp);
+        setDeletingId(null);
+        
+        // Show success notification
+        showNotification(
+          'danger',
+          'Employee Deleted',
+          `${employeeToDelete.name} has been removed from the system.`
+        );
+      }, 500);
+    }
+    
+    setShowConfirmDialog(false);
+    setEmployeeToDelete(null);
+  };
+
+  const handleCancelDelete = () => {
+    setShowConfirmDialog(false);
+    setEmployeeToDelete(null);
   };
 
   const handleEdit = (id) => {
     const EditEmp = employees.find(emp => emp.id === id);
     setEmployee(EditEmp);
     setIsEditing(true);
+    
+    // Show info notification
+    showNotification(
+      'info',
+      'Editing Employee',
+      `You are now editing ${EditEmp.fullname}'s information.`
+    );
+    
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -205,6 +351,13 @@ export default function App() {
       status: ""
     });
     setIsEditing(false);
+    
+    // Show warning notification
+    showNotification(
+      'warning',
+      'Edit Cancelled',
+      'Employee editing has been cancelled.'
+    );
   };
 
   const formatDate = (dateString) => {
@@ -260,6 +413,13 @@ export default function App() {
     // Generate Excel file
     const fileName = `employees_${new Date().toISOString().split('T')[0]}.xlsx`;
     XLSX.writeFile(wb, fileName);
+    
+    // Show success notification
+    showNotification(
+      'success',
+      'Export Successful',
+      `Exported ${filteredEmployees.length} employees to Excel.`
+    );
   };
 
   // Get unique options for filters
@@ -286,10 +446,41 @@ export default function App() {
       status: "all"
     });
     setSearchTerm("");
+    
+    // Show info notification
+    showNotification(
+      'info',
+      'Filters Cleared',
+      'All filters have been cleared.'
+    );
   };
 
   return (
     <div className="App">
+      {/* Notifications Container */}
+      <div className="notifications-container">
+        {notifications.map(notification => (
+          <Notification
+            key={notification.id}
+            type={notification.type}
+            title={notification.title}
+            message={notification.message}
+            onClose={() => removeNotification(notification.id)}
+          />
+        ))}
+      </div>
+
+      {/* Confirmation Dialog */}
+      <ConfirmationDialog
+        isOpen={showConfirmDialog}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        title="Confirm Delete"
+        message={`Are you sure you want to delete "${employeeToDelete?.name}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
+
       <div className="container">
         <div className="Header">
           <div className="header-content">
@@ -761,13 +952,13 @@ export default function App() {
                             onClick={() => handleEdit(emp.id)}
                             className="edit-icon"
                             title="Edit"
-                            size={32}
+                            size={24}
                           />
                           <UserRoundMinus
-                            onClick={() => handleDelete(emp.id)}
+                            onClick={() => handleDeleteClick(emp.id, emp.fullname)}
                             className="delete-icon"
                             title="Delete"
-                            size={32}
+                            size={24}
                           />
                         </td>
                       </tr>

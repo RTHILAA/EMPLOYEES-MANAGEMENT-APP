@@ -512,12 +512,8 @@ body {
   animation-fill-mode: both;
 }
 
-.employees-table tbody tr:nth-child(even) {
-  background-color: #f8fafc;
-}
-
 .employees-table tbody tr:hover {
-  background-color: #f1f5f9;
+  background-color: #F4F7F9;
   transform: scale(1.01);
 }
 
@@ -527,7 +523,6 @@ body {
 
 .employees-table tbody tr.deleting {
   animation: shake 0.5s ease;
-  background-color: #fee2e2;
 }
 
 .employees-table tbody tr.search-highlight {
@@ -564,39 +559,24 @@ body {
   font-size: 0.9rem;
 }
 
-.actions {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  align-items: center;
-}
-
 .edit-icon,
 .delete-icon {
   cursor: pointer;
-  padding: 8px;
-  border-radius: 6px;
   transition: var(--transition-default);
 }
 
 .edit-icon {
   color: var(--primary-color);
-  background-color: rgba(37, 99, 235, 0.1);
+  margin-right: 10px;
 }
 
-.edit-icon:hover {
-  background-color: rgba(37, 99, 235, 0.2);
-  transform: rotate(15deg) scale(1.1);
+.edit-icon:hover,
+.delete-icon:hover {
+  transform: scale(1.2);
 }
 
 .delete-icon {
   color: var(--danger-color);
-  background-color: rgba(239, 68, 68, 0.1);
-}
-
-.delete-icon:hover {
-  background-color: rgba(239, 68, 68, 0.2);
-  transform: rotate(-15deg) scale(1.1);
 }
 
 .empty-state {
@@ -901,6 +881,222 @@ body {
 
 .active-filter-tag button:hover {
   background: rgba(37, 99, 235, 0.2);
+}
+
+/* Notifications Styles */
+.notifications-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 350px;
+}
+
+.notification {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  animation: slideInRight 0.3s ease-out;
+  border-left: 4px solid;
+  transition: all 0.3s ease;
+  transform: translateX(120%);
+  opacity: 0;
+}
+
+.notification.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.notification.hide {
+  transform: translateX(120%);
+  opacity: 0;
+}
+
+.notification.success {
+  border-left-color: var(--success-color);
+}
+
+.notification.warning {
+  border-left-color: var(--warning-color);
+}
+
+.notification.danger {
+  border-left-color: var(--danger-color);
+}
+
+.notification.info {
+  border-left-color: var(--primary-color);
+}
+
+.notification-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.notification.success .notification-icon {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
+}
+
+.notification.warning .notification-icon {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--warning-color);
+}
+
+.notification.danger .notification-icon {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--danger-color);
+}
+
+.notification.info .notification-icon {
+  background-color: rgba(37, 99, 235, 0.1);
+  color: var(--primary-color);
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+  color: #1e293b;
+}
+
+.notification-message {
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.notification-close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: var(--transition-default);
+  margin-left: 4px;
+}
+
+.notification-close:hover {
+  color: var(--danger-color);
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Confirmation Dialog Styles */
+.confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.confirmation-dialog {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: slideInUp 0.3s ease-out;
+}
+
+.confirmation-dialog h3 {
+  color: #1e293b;
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.confirmation-dialog p {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.confirm-btn,
+.cancel-btn-confirm {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-default);
+  font-size: 0.95rem;
+}
+
+.confirm-btn {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.confirm-btn:hover {
+  background-color: #dc2626;
+}
+
+.cancel-btn-confirm {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.cancel-btn-confirm:hover {
+  background-color: #64748b;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Responsive Design pour le formulaire 4 colonnes */
