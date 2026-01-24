@@ -8,7 +8,7 @@ A modern, responsive web application for managing employee records with real-tim
 
 ## 🎯 Live Demo : 
 
-🔗 [Finance Tracker](https://rth-finance-tracker.netlify.app/)
+🔗 [Employee Management System](https://rth-employee-management.netlify.app/)
 
 We would appreciate it if you decide to use this project. Please include credit when using it. Thank you! 🙏
 
