@@ -501,11 +501,10 @@ body {
 
 .employees-table th,
 .employees-table td {
-  padding: 14px;
+  padding: 15px;
   text-align: center;
   border-bottom: 1px solid var(--border-color);
   transition: var(--transition-default);
-  min-width: 120px;
   color: #344256;
 }
 
@@ -1114,11 +1113,6 @@ body {
   }
 }
 
-/* ============================================= */
-/* RESPONSIVE DESIGN - جميع أحجام الشاشات */
-/* ============================================= */
-
-/* الشاشات الكبيرة (1200px فما فوق) */
 @media (min-width: 1200px) {
   .form-group form {
     grid-template-columns: repeat(4, 1fr);
@@ -1133,7 +1127,6 @@ body {
   }
 }
 
-/* الأجهزة اللوحية الكبيرة والشاشات المتوسطة (950px - 1199px) */
 @media (min-width: 950px) and (max-width: 1199px) {
   .form-group form {
     grid-template-columns: repeat(3, 1fr);
@@ -1156,7 +1149,6 @@ body {
   }
 }
 
-/* الأجهزة اللوحية والشاشات المتوسطة (481px - 949px) */
 @media (min-width: 481px) and (max-width: 949px) {
   /* Header */
   .Header span {
