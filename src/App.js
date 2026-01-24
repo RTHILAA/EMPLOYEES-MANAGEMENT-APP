@@ -1,33 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import "./App.css";
 import * as XLSX from 'xlsx';
-import {
-  UserRoundPen,
-  UserRoundMinus,
-  UserRoundPlus,
-  CalendarOff,
-  SaveIcon,
-  XCircle,
-  Calendar,
-  DollarSign,
-  Briefcase,
-  Mail,
-  Phone,
-  Building,
-  UsersRound,
-  UserRoundCheck,
-  UserRoundX,
-  CalendarDays,
-  UserRound,
-  Search,
-  Filter,
-  Download,
-  X,
-  CheckCircle,
-  AlertCircle,
-  Info,
-  Trash2
-} from "lucide-react";
+import { UserRoundPen, UserRoundMinus, UserRoundPlus, CalendarOff, SaveIcon, XCircle, Calendar, DollarSign, Briefcase, Mail, Phone, Building, UsersRound, UserRoundCheck, UserRoundX, CalendarDays, UserRound, Search, Filter, Download, X, CheckCircle, AlertCircle, Info, Trash2 } from "lucide-react";
 
 // StatsCard Component
 const StatsCard = ({ title, value, icon, color = 'primary', trend }) => {
@@ -94,14 +68,14 @@ const Notification = ({ type, title, message, onClose }) => {
 };
 
 // Confirmation Dialog Component
-const ConfirmationDialog = ({ 
-  isOpen, 
-  onClose, 
-  onConfirm, 
-  title, 
-  message, 
-  confirmText = "Delete", 
-  cancelText = "Cancel" 
+const ConfirmationDialog = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
+  message,
+  confirmText = "Delete",
+  cancelText = "Cancel"
 }) => {
   if (!isOpen) return null;
 
@@ -114,14 +88,14 @@ const ConfirmationDialog = ({
         </h3>
         <p>{message}</p>
         <div className="confirmation-actions">
-          <button 
-            className="cancel-btn-confirm" 
+          <button
+            className="cancel-btn-confirm"
             onClick={onClose}
           >
             {cancelText}
           </button>
-          <button 
-            className="confirm-btn" 
+          <button
+            className="confirm-btn"
             onClick={onConfirm}
           >
             {confirmText}
@@ -249,7 +223,7 @@ export default function App() {
       );
       setEmployees(updatedEmployees);
       setIsEditing(false);
-      
+
       // Show success notification
       showNotification(
         'success',
@@ -266,14 +240,14 @@ export default function App() {
       };
       setEmployees([...employees, NewEmp]);
       setNewEmployeeId(NewEmp.id);
-      
+
       // Show success notification
       showNotification(
         'success',
         'Employee Added',
         `${employee.fullname} has been successfully added to the system.`
       );
-      
+
       // Clear highlight after animation
       setTimeout(() => setNewEmployeeId(null), 1000);
     }
@@ -299,13 +273,13 @@ export default function App() {
   const handleConfirmDelete = () => {
     if (employeeToDelete) {
       setDeletingId(employeeToDelete.id);
-      
+
       // Add animation delay before actual deletion
       setTimeout(() => {
         const UpdatedEmp = employees.filter(emp => emp.id !== employeeToDelete.id);
         setEmployees(UpdatedEmp);
         setDeletingId(null);
-        
+
         // Show success notification
         showNotification(
           'danger',
@@ -314,7 +288,7 @@ export default function App() {
         );
       }, 500);
     }
-    
+
     setShowConfirmDialog(false);
     setEmployeeToDelete(null);
   };
@@ -328,14 +302,14 @@ export default function App() {
     const EditEmp = employees.find(emp => emp.id === id);
     setEmployee(EditEmp);
     setIsEditing(true);
-    
+
     // Show info notification
     showNotification(
       'info',
       'Editing Employee',
       `You are now editing ${EditEmp.fullname}'s information.`
     );
-    
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -351,7 +325,7 @@ export default function App() {
       status: ""
     });
     setIsEditing(false);
-    
+
     // Show warning notification
     showNotification(
       'warning',
@@ -413,7 +387,7 @@ export default function App() {
     // Generate Excel file
     const fileName = `employees_${new Date().toISOString().split('T')[0]}.xlsx`;
     XLSX.writeFile(wb, fileName);
-    
+
     // Show success notification
     showNotification(
       'success',
@@ -446,7 +420,7 @@ export default function App() {
       status: "all"
     });
     setSearchTerm("");
-    
+
     // Show info notification
     showNotification(
       'info',
@@ -596,26 +570,26 @@ export default function App() {
                   required
                 >
                   <option value="">Select Department</option>
-                  <option 
-                    value="IT" 
+                  <option
+                    value="IT"
                     className="option-it"
                   >
                     Information Technology (IT)
                   </option>
-                  <option 
-                    value="HR" 
+                  <option
+                    value="HR"
                     className="option-hr"
                   >
                     Human Resources (HR)
                   </option>
-                  <option 
-                    value="Finance" 
+                  <option
+                    value="Finance"
                     className="option-finance"
                   >
                     Finance
                   </option>
-                  <option 
-                    value="Sales" 
+                  <option
+                    value="Sales"
                     className="option-sales"
                   >
                     Sales
@@ -635,7 +609,7 @@ export default function App() {
                   required
                 >
                   <option value="">Select Position</option>
-                  
+
                   {/* IT Positions */}
                   <optgroup label="Information Technology">
                     <option value="IT Manager">
@@ -651,7 +625,7 @@ export default function App() {
                       Helpdesk Technician
                     </option>
                   </optgroup>
-                  
+
                   {/* HR Positions */}
                   <optgroup label="Human Resources">
                     <option value="HR Manager">
@@ -664,7 +638,7 @@ export default function App() {
                       Recruiter
                     </option>
                   </optgroup>
-                  
+
                   {/* Finance Positions */}
                   <optgroup label="Finance">
                     <option value="Finance Manager">
@@ -677,7 +651,7 @@ export default function App() {
                       Financial Analyst
                     </option>
                   </optgroup>
-                  
+
                   {/* Sales Positions */}
                   <optgroup label="Sales">
                     <option value="Sales Manager">
