@@ -239,12 +239,12 @@ export default function App() {
       prev.filter((notification) => notification.id !== id),
     );
   };
-
-  const handleChange = (e) => {
-    const id = e.target.id;
-    const value = e.target.value;
-    setEmployee({ ...employee, [id]: value });
-  };
+  
+const handleChange = (e) => {
+  const id = e.target.id;
+  const value = e.target.value;
+  setEmployee({ ...employee, [id]: value });
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();
